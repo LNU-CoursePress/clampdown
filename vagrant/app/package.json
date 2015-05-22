@@ -19,7 +19,9 @@
     "gulp-uglify": "^1.0.1",
     "gulp-develop-server": "^0.3.0",
     "gulp-livereload": "^3.8.0",
-    "jscs": "^1.13.1"
+    "jscs": "^1.13.1",
+    "morgan": "^1.5.3",
+    "method-override": "^2.3.3"
   },
   "dependencies": {
     "mongoose": "^4.0.3",

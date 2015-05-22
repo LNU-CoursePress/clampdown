@@ -1,0 +1,11 @@
+
+{{#each students}}
+    <form method="POST" action="/students/{{username}}?_method=delete">
+        Username: {{username}}<br />
+        GithubName: {{githubName}} <br />
+        <button>Delete</button><br />
+        <hr />
+
+    </form>
+{{/each}}
+
