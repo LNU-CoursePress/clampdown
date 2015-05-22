@@ -1,0 +1,9 @@
+<h1>Is this you?</h1>
+Name: {{name}}<br />
+Email: {{email}}<br />
+<img width="300" src="{{url}}" />
+<form action="/students" method="post">
+    <input type="hidden" name="username" value="{{username}}"/>
+    <input type="hidden" name="githubName" value="{{githubName}}"/>
+    <input type="submit" value="Confirm and save!"/>
+</form>

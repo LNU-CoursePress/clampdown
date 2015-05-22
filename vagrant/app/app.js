@@ -34,9 +34,30 @@ app.get('/', function(req, res) {
 
 // Should do redirect
 app.post('/', function(req, res) {
+    var gh = require('./github');
     var schoolName = req.body.schoolUsername;
     var githubName = req.body.githubUsername;
+    if(schoolName.length < 1 || githubName < 1) {
+        return res.render('index', {error: 'Didn\'t provide correctly'});
+    }
+    gh.getUserInfo(githubName, function(err, result) {
+        try {
+            result = JSON.parse(result);
+        }
+        catch(e) {
+            console.log('Error, %s', e);
+        }
+        var name = result.name;
+        var url = result.avatar_url;
+        var email = result.email;
+        res.render('confirm', {username: schoolName, githubName: githubName, name: name, url: url, email: email});
+    });
+});
 
+app.post('/students/', function(req, res) {
+    // TODO: DRY!
+    var schoolName = req.body.username;
+    var githubName = req.body.githubName;
     if(schoolName.length < 1 || githubName < 1) {
         return res.render('index', {error: 'Didn\'t provide correctly'});
     }
@@ -46,7 +67,6 @@ app.post('/', function(req, res) {
         }
         res.redirect('/thanx');
     });
-
 });
 
 app.get('/thanx', function(req, res){
@@ -56,7 +76,7 @@ app.get('/thanx', function(req, res){
 
 
 
-app.get('students', function(req, res) {
+app.get('/students', function(req, res) {
     studentDB.listStudents(function(students) {
         console.log(students);
         res.render('students', {students: students});
@@ -65,7 +85,7 @@ app.get('students', function(req, res) {
 
 
 
-app.delete('students/:username', function(req, res){
+app.delete('/students/:username', function(req, res){
     console.log("Should remove: %s", req.param('username'));
     var username = req.param('username');
     studentDB.deleteStudent(username, function(err) {
@@ -76,7 +96,7 @@ app.delete('students/:username', function(req, res){
     });
 });
 
-app.patch('students/:username', function(req, res){
+app.patch('/students/:username', function(req, res){
     console.log("Should update: %s with: %s", req.param('username'), req.param('githubName'));
     var username = req.param('username');
     var githubName = req.param('githubName');
