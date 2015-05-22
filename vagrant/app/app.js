@@ -40,18 +40,39 @@ app.post('/', function(req, res) {
     if(schoolName.length < 1 || githubName < 1) {
         return res.render('index', {error: 'Didn\'t provide correctly'});
     }
-    gh.getUserInfo(githubName, function(err, result) {
-        try {
-            result = JSON.parse(result);
+
+    // Check if user alredy exists
+    studentDB.showStudent(githubName, function(err, result) {
+        console.log("Result: %s", result);
+        console.log(result.length);
+        if(err) {
+           return console.log("Problem with connection when tryng to find user?");
         }
-        catch(e) {
-            console.log('Error, %s', e);
+        if(result.length > 0) {
+           return res.render('index', {error: 'User is alredy registerd'});
         }
-        var name = result.name;
-        var url = result.avatar_url;
-        var email = result.email;
-        res.render('confirm', {username: schoolName, githubName: githubName, name: name, url: url, email: email});
+        gh.getUserInfo(githubName, function(err, result) {
+
+            if(!result) {
+                return res.render('index', {error: 'Can\'t find any github user with that name'});
+            }
+            try {
+                result = JSON.parse(result);
+            }
+            catch(e) {
+                console.log('Error, %s', e);
+                return res.render('index', {error: 'Github responded with bad data!'});
+            }
+
+            var name = result.name;
+            var url = result.avatar_url;
+            var email = result.email;
+            res.render('confirm', {username: schoolName, githubName: githubName, name: name, url: url, email: email});
+        });
+
     });
+
+
 });
 
 app.post('/students/', function(req, res) {

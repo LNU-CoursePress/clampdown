@@ -50,7 +50,12 @@ function listStudents(callback) {
     });
 }
 
+function showStudent(githubName, callback) {
+    Student.find({githubName: githubName}, callback);
+}
+
 exports.saveStudent = saveStudent;
 exports.listStudents = listStudents;
+exports.showStudent = showStudent;
 exports.deleteStudent = deleteStudent;
 exports.updateGithubUsername = updateGithubUsername;
