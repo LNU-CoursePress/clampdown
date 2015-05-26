@@ -1,11 +1,31 @@
 
-{{#each students}}
-    <form method="POST" action="/students/{{username}}?_method=delete">
-        Username: {{username}}<br />
-        GithubName: {{githubName}} <br />
-        <button>Delete</button><br />
-        <hr />
 
-    </form>
-{{/each}}
 
+<div class="container">
+    <div class="row s6">
+        <div class="col s6">
+            <table class="striped bordered">
+                <thead>
+                <tr>
+                    <th data-field="lnu">LNU username</th>
+                    <th data-field="github">GitHub username</th>
+                    <th data-field="none"></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {{#each students}}
+                    <tr>
+                        <form method="POST" action="/students/{{username}}?_method=delete">
+                            <td>{{username}}</td>
+                            <td>{{githubName}}</td>
+                            <td><button class="btn-floating waves-effect waves-light red"><i class="mdi-content-remove-circle"></i></button></td>
+                        </form>
+                    </tr>
+
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
