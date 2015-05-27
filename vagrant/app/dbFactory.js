@@ -34,12 +34,11 @@ process.on('SIGINT', function() {
 });
 
 
-function createDbConnection(host, dbName) {
-    // Build the connection string
-    var dbURI = 'mongodb://' +host +'/' +dbName;
-    console.log(dbURI);
+function createDbConnection(dbNameURL) {
+
+    console.log(dbNameURL);
     // Create the database connection
-    mongoose.connect(dbURI);
+    mongoose.connect(dbNameURL);
 }
 
 exports.createDbConnection = createDbConnection;

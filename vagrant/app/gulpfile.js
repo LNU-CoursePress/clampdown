@@ -1,3 +1,5 @@
+'use strict';
+
 var gulp       = require( 'gulp' ),
     server     = require( 'gulp-develop-server' ),
     livereload = require( 'gulp-livereload' );
@@ -9,7 +11,7 @@ var options = {
 
 
 var serverFiles = [
-    './*.js'
+    './**/*.js'
 ];
 
 gulp.task( 'server:start', function() {
