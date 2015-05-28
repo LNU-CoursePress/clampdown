@@ -1,11 +1,11 @@
 'use strict';
 
-// Development specific configuration
+// Test specific configuration
 // ==================================
 module.exports = {
     // MongoDB connection options
     mongo: {
-        uri: 'mongodb://localhost/dev-students'
+        uri: 'mongodb://localhost/test'
     },
     seedDB: true
 };

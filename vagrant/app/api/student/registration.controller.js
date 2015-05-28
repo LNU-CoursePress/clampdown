@@ -31,7 +31,7 @@ exports.begin = function(req, res) {
         if(result.length > 0) {
             return res.render('index', {error: 'User is alredy registerd'});
         }
-        var gh = rootRequire('helpers/github'); //jshint ignore:line
+        var gh = require('../../helpers/github');
         gh.getUserInfo(githubName, function(err, result) {
 
             if(!result) {

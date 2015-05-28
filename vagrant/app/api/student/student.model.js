@@ -1,6 +1,5 @@
 'use strict';
 
-
 exports.saveStudent = saveStudent;
 exports.listStudents = listStudents;
 exports.showStudent = showStudent;
@@ -8,24 +7,16 @@ exports.deleteStudent = deleteStudent;
 exports.updateGithubUsername = updateGithubUsername;
 
 
-
-var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
-
-var StudentSchema = new Schema({
-    username: String,
-    githubName: String
-});
-
-
-var Student = mongoose.model('Student', StudentSchema);
+var Student = require('./student.schema.js').Student;
 function saveStudent(username, githubName, callback) {
+
     var student = new Student({
         username: username,
         githubName: githubName
     });
 
     Student.find({username : username}, function (err, result) {
+
         if(err) {
             return callback("Error in saving student");
         }
@@ -53,10 +44,13 @@ function updateGithubUsername(username, githubName, callback) {
 }
 
 function listStudents(callback) {
+
     Student.find(function (err, students) {
+
         if (err) {
             return callback(err);
         }
+        console.log("Students in listSTudents: ", students);
         callback(students);
     });
 }

@@ -2,7 +2,9 @@
 
 var gulp       = require( 'gulp' ),
     server     = require( 'gulp-develop-server' ),
-    livereload = require( 'gulp-livereload' );
+    livereload = require( 'gulp-livereload'),
+    mocha      = require( 'gulp-mocha'),
+    jshint = require('gulp-jshint');
 
 var options = {
     path: './app.js'
@@ -46,3 +48,16 @@ gulp.task('debug', function() {
 
     gulp.watch( serverFiles ).on( 'change', restart );
 });
+
+gulp.task('hint', function() {
+    return gulp.src('./api/**/*.js')
+        .pipe(jshint('.jshintrc'))
+        .pipe(jshint.reporter('jshint-stylish'), { verbose: true });
+});
+
+gulp.task('mocha', function() {
+    gulp.src('./tests/**/*.js')
+        .pipe(mocha({ reporter: 'list' }));
+});
+
+gulp.task('test', ['hint', 'mocha']);
