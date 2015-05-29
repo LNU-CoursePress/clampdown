@@ -17,7 +17,7 @@ exports.seed = function(callback) {
             {username: 'tstjo', githubName: 'leitet'},
             {username: 'mats', githubName: 'mtslck'},
             function() {
-                console.log('finished populating students');
+                //console.log('finished populating students');
                 callback();
             }
         );

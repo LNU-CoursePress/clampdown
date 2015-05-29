@@ -23,7 +23,7 @@ beforeEach(function (done) {
         if(config.seedDB) {
 
             require('./seed.js').seed(function() {
-                console.log("seed done");
+               // console.log("seed done");
                return done();
             });
         }

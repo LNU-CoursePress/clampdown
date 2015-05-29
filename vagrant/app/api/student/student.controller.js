@@ -25,7 +25,10 @@ exports.create = function(req, res) {
 };
 
 exports.show = function(req, res) {
-    Student.listStudents(function(students) {
+    Student.listStudents(function(err, students) {
+        if(err) {
+            console.log("Error from getting a list of students");
+        }
        respondTo(req, res, {students: students}, 'students');
     });
 };

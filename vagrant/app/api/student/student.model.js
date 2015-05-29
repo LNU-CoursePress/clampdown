@@ -6,6 +6,7 @@ exports.showStudent = showStudent;
 exports.deleteStudent = deleteStudent;
 exports.updateGithubUsername = updateGithubUsername;
 
+var whiteList = '-_id username githubName';
 
 var Student = require('./student.schema.js').Student;
 function saveStudent(username, githubName, callback) {
@@ -45,16 +46,26 @@ function updateGithubUsername(username, githubName, callback) {
 
 function listStudents(callback) {
 
-    Student.find(function (err, students) {
+    Student.find({}, whiteList).lean().exec(function (err, doc) {
 
         if (err) {
             return callback(err);
         }
-        console.log("Students in listSTudents: ", students);
-        callback(students);
+       callback(null, asJSON(doc));
     });
 }
 
-function showStudent(githubName, callback) {
-    Student.find({githubName: githubName}, callback);
+function showStudent(username, callback) {
+    // lean is JSON not MongooseDocuments
+    Student.findOne({username: username}, whiteList).lean().exec(function(err, doc) {
+        if(err) {
+            return callback(err);
+        }
+        var result =  asJSON(doc); // Hmmm...?
+        callback(null, result); // stingify the result
+    });
+}
+
+function asJSON(doc) {
+    return JSON.parse(JSON.stringify(doc));
 }

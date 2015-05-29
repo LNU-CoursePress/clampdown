@@ -50,14 +50,17 @@ gulp.task('debug', function() {
 });
 
 gulp.task('hint', function() {
-    return gulp.src('./api/**/*.js')
+    gulp.src('./api/**/*.js')
         .pipe(jshint('.jshintrc'))
         .pipe(jshint.reporter('jshint-stylish'), { verbose: true });
 });
 
 gulp.task('mocha', function() {
-    gulp.src('./tests/**/*.js')
-        .pipe(mocha({ reporter: 'list' }));
+    gulp
+        .src('./tests/**/*.js')
+        .pipe(mocha({ reporter: 'spec' }))
+        .on('error', function(err){ console.log(err.toString()); this.emit('end');  });// should maby log this?
+
 });
 
-gulp.task('test', ['hint', 'mocha']);
+gulp.task('test', ['mocha', 'hint']);
