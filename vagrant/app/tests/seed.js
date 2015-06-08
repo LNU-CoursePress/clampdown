@@ -1,5 +1,5 @@
 /**
- * Populate DB with sample data on server start
+ * Populate DB with sample test data on server start
  * to disable, edit config/environment/index.js, and set `seedDB: false`
  */
 
@@ -13,9 +13,27 @@ exports.seed = function(callback) {
     Student.remove({}, function() {
 
         Student.create(
-            {username: 'thajo', githubName: 'thajo'},
-            {username: 'tstjo', githubName: 'leitet'},
-            {username: 'mats', githubName: 'mtslck'},
+            {
+                username: 'thajostudent',
+                firstname: 'John',
+                lastname: 'Häggerud',
+                studentType: 'Campus',
+                startYear: new Date('2013').getFullYear(),
+                services: {
+                    github: 'thajo'
+                }
+            },
+            {
+                username: 'tstjo',
+                firstname: 'Johan',
+                lastname: 'Leitet',
+                studentType: 'Distance',
+                startYear: new Date('2013').getFullYear(),
+                services: {
+                    github: 'leitet',
+                    linkedIn: 'leitet'
+                }
+            },
             function() {
                 //console.log('finished populating students');
                 callback();

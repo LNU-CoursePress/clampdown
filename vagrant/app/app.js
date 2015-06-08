@@ -8,6 +8,9 @@
 // Set default node environment to development
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
+
+console.log(process.env.NODE_ENV);
+
 var express = require('express');
 var config = require('./config/environment');
 
@@ -17,7 +20,7 @@ db.createDbConnection(config.mongo.uri, config.mongo.options); // doesn't mind t
 
 
 // Populate DB with sample data
-if(config.seedDB) { require('./config/seed'); }
+if(config.seedDB) { require('./config/seed').seed(); }
 
 
 
