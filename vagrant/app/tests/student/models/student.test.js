@@ -98,7 +98,7 @@ describe('Students: model', function () {
         });
     });
 
-    describe('#list()', function () {
+    describe('### List students', function () {
         it('should list users in the application', function (done) {
             // Create a User object to pass to User.create()
 
@@ -140,6 +140,157 @@ describe('Students: model', function () {
             });
         });
 
+    });
+
+    describe('### Show single student', function () {
+        it('should show the user provided by username', function (done) {
+            // Create a User object to pass to User.create()
+
+            Student.showStudent('thajostudent', function (err, result) {
+                // Confirm that that an error does not exist
+                should.not.exist(err);
+
+                // verify that the returned user is what we expect
+                result.should.be.instanceof(Object);
+                var obj1 = {
+                    username: 'thajostudent',
+                    firstname: 'John',
+                    lastname: 'Häggerud',
+                    studentType: 'Campus',
+                    services: {
+                        github: 'thajo'
+                    },
+                    startYear: new Date('2013').getFullYear()
+                };
+
+                expect(result).to.eql(obj1);
+
+                done();
+            });
+        });
+
+        it('should return an error when no user i found', function (done) {
+            // Create a User object to pass to User.create()
+
+            Student.showStudent('xxxxxxx', function (err, result) {
+
+                should.exist(err);
+                should.not.exist(result);
+                err.should.be.instanceof(Error);
+                expect(err.message).to.eql(Messages.eng.show.usernameNotFound);
+
+                done();
+            });
+        });
+
+        it('should return an error when no username provided', function (done) {
+            // Create a User object to pass to User.create()
+
+            Student.showStudent(null, function (err, result) {
+
+                should.exist(err);
+                should.not.exist(result);
+                err.should.be.instanceof(Error);
+                expect(err.message).to.eql(Messages.eng.show.usernameNotFound);
+
+                done();
+            });
+        });
+
+    });
+
+
+    describe('### Update Student', function() {
+        it('should update a student', function(done) {
+
+
+            var mockObject = {
+                username: 'mats',
+                firstname: 'Mats',
+                lastname: 'Loock',
+                studentType: 'Distance',
+                startYear: new Date().getFullYear(),
+                services: {
+                    github: 'mtslk'
+                }
+            };
+
+            Student.updateStudent('thajostudent', mockObject, function(err, result) {
+
+
+                // Confirm that that an error does not exist
+                should.not.exist(err);
+                expect(result).to.eql(mockObject);
+                // Call done to tell mocha that we are done with this test
+
+                Student.showStudent('mats', function(err, result) {
+
+                    should.not.exist(err);
+                    expect(result).to.eql(mockObject);
+                    done();
+                });
+
+
+            });
+        });
+
+        /*it('should return error, trying to create with same username', function(done) {
+            var mockObject = {
+                username: 'thajostudent',
+                firstname: 'John',
+                lastname: 'Häggerud',
+                studentType: 'Campus',
+                startYear: new Date().getFullYear(),
+                services: {
+                    github: 'thajo'
+                }
+            };
+
+            Student.createStudent(mockObject, function(err, result) {
+                // Confirm that that an error does not exist
+                should.exist(err);
+                should.not.exist(result);
+                err.should.be.instanceof(Error);
+                expect(err.message).to.eql(Messages.eng.create.usernameTaken);
+                // Call done to tell mocha that we are done with this test
+                done();
+            });
+        });
+
+        it('should return required validation error, trying to create with empty object', function(done) {
+            var mockObject = {};
+
+            Student.createStudent(mockObject, function(err, result) {
+                // Confirm that that an error does not exist
+                should.exist(err);
+                should.not.exist(result);
+                err.should.be.instanceof(Error);
+                expect(err.toString()).to.eql('ValidationError: Path `services.github` is required., Path `studentType` is required., Path `username` is required., Path `lastname` is required., Path `firstname` is required.');
+                done();
+            });
+        });
+
+        it('should return validation error, trying to populate enums with bad values', function(done) {
+            var mockObject = {
+                username: 'xxxxx',
+                firstname: 'John',
+                lastname: 'Häggerud',
+                studentType: 'hittepå',
+                startYear: new Date().getFullYear(),
+                services: {
+                    github: 'thajo'
+                }
+            };
+
+            Student.createStudent(mockObject, function(err, result) {
+                // Confirm that that an error does not exist
+                should.exist(err);
+                should.not.exist(result);
+                err.should.be.instanceof(Error);
+                expect(err.toString()).to.eql('ValidationError: `hittepå` is not a valid enum value for path `studentType`.');
+                done();
+            });
+        });*/
     });
 
     /*

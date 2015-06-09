@@ -4,7 +4,7 @@ exports.createStudent = createStudent;
 exports.listStudents = listStudents;
 exports.showStudent = showStudent;
 exports.deleteStudent = deleteStudent;
-exports.updateGithubUsername = updateGithubUsername;
+exports.updateStudent = updateStudent;
 
 var whiteList = '-_id -__v'; // use to remove stuff we dont want in the response
 var Student = require('./student.schema.js').Student;
@@ -19,13 +19,15 @@ var Messages = require('./student.Strings.js').Messages;
  */
 function createStudent(studentObject, callback) {
     var username = studentObject.username;
+
+    // TODO: Use mongoose unique insteed
     Student.find({username : username}, function (err, result) {
         var currentStudent = new Student(studentObject);
         if(err) {
             return callback(err);
         }
         if (result.length){
-            return callback(new Error(Messages.eng.create.usernameTaken), null);
+            return callback(new Error(Messages.eng.create.usernameTaken));
         }
         else {
             currentStudent.save(function(err){
@@ -60,6 +62,9 @@ function showStudent(username, callback) {
         if(err) {
             return callback(err);
         }
+        if(!doc) {
+            return callback(new Error(Messages.eng.show.usernameNotFound));
+        }
         var result =  asJSON(doc); // Hmmm...?
         callback(null, result); // stingify the result
     });
@@ -67,11 +72,25 @@ function showStudent(username, callback) {
 
 
 function deleteStudent(username, callback) {
-    Student.findOneAndRemove({ username:username }, callback );
+    Student.findOneAndRemove({ username:username }, function(err, result) {
+        if(err) {
+            return callback(err);
+        }
+        callback(null, result);
+    });
 }
 
-function updateGithubUsername(username, githubName, callback) {
-    Student.findOneAndUpdate({username: username}, {githubName: githubName}, callback);
+function updateStudent(orginalUsername, newObject, callback) {
+
+
+    Student.findOneAndUpdate({username: orginalUsername}, newObject).lean(whiteList).exec( function(err, result) {
+        console.log(err);
+        console.log(result);
+        if(err) {
+            return callback(err);
+        }
+        callback(null, result);
+    });
 }
 
 /**
