@@ -7,6 +7,13 @@ var obj = {
         },
         show: {
             usernameNotFound: 'The user was not found!'
+        },
+        update: {
+            usernameNotFound: 'The user was not found!'
+        },
+        delete: {
+            success: 'The user was deleted',
+            usernameNotFound: 'The user was not found!'
         }
     }
 };
