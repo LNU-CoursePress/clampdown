@@ -119,6 +119,7 @@ function updateStudent(orginalUsername, newObject, callback) {
  * @private
  * Take a BSON-object (mongoose document) and make it to JSON
  * @param {Object} doc
+ * @return {Object} - An JSON-object
  */
 function asJSON(doc) {
     return JSON.parse(JSON.stringify(doc));

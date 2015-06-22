@@ -7,7 +7,7 @@
 var express = require('express');
 var router = express.Router();
 
-// this is used for the web site (HTML
+// this is used for the web site (HTML)
 var registrationController = require('./registration.controller');
 router.get('/', registrationController.index);
 router.post('/', registrationController.begin);

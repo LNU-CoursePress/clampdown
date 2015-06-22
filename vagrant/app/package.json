@@ -25,7 +25,8 @@
     "method-override": "^2.3.3",
     "gulp-mocha": "^2.1.0",
     "jshint-stylish": "^2.0.0",
-    "chai": "~2.3.0"
+    "chai": "~2.3.0",
+    "superagent": "^1.2.0"
   },
   "dependencies": {
     "mongoose": "^4.0.3",

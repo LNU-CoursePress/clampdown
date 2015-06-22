@@ -79,7 +79,7 @@ function redirectTo(req, res, code, url) {
 
 function respondTo(req, res, data, template) {
     if(wantJSON(req)) {
-        return res.send(data);
+        return res.send(JSON.stringify(data));
     }
     return res.render(template, data);
 }

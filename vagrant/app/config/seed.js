@@ -7,7 +7,7 @@
 
 
 
-exports.seed = function() {
+exports.seed = function(callback) {
     var Student = require('../api/student/student.schema.js').Student;
     Student.remove({}, function() {
 
@@ -17,7 +17,7 @@ exports.seed = function() {
                 firstname: 'John',
                 lastname: 'Häggerud',
                 studentType: 'Campus',
-                startYear: new Date(),
+                startYear: new Date('2013').getFullYear(),
                 services: {
                     github: 'thajo'
                 }
@@ -27,15 +27,15 @@ exports.seed = function() {
                 firstname: 'Johan',
                 lastname: 'Leitet',
                 studentType: 'Distance',
-                startYear: new Date(),
+                startYear: new Date('2013').getFullYear(),
                 services: {
                     github: 'leitet',
                     linkedIn: 'leitet'
                 }
             },
             function() {
-                console.log('finished seeding students');
-                //callback();
+                console.log('finished populating students');
+                callback();
             }
         );
 
