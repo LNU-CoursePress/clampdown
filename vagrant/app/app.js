@@ -9,7 +9,7 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 
-console.log(process.env.NODE_ENV);
+console.log('ENviroment mode is: ', process.env.NODE_ENV);
 
 var express = require('express');
 var config = require('./config/environment');

@@ -6,30 +6,24 @@
 
 'use strict';
 var Student = require('./student.model');
-var TYPE_JSON = 'application/json';
+var Messages = require('./student.Strings.js').Messages;
 
 exports.create = function(req, res) {
-    // Works as POSTDATA and json
-    var schoolName = req.body.username;
-    var githubName = req.body.githubName;
-
-    if(!schoolName || !githubName || schoolName.length < 1 || githubName.length < 1) {
-        return respondTo(req, res, {error: 'Didn\'t provide correctly'}, 'index');
-    }
-    Student.saveStudent(schoolName, githubName, function(err, result) {
+    Student.createStudent(req.body, function(err, result) {
         if(err) {
-            console.log('Error: %s, Student: %s', err, result);
+            return respondTo(err, res, null, 400);
         }
-        return redirectTo(req, res, 201, '/thanx');
+        return respondTo(null, res, result, 201);
+
     });
 };
 
-exports.show = function(req, res) {
+exports.list = function(req, res) {
     Student.listStudents(function(err, students) {
         if(err) {
-            console.log("Error from getting a list of students");
+            respondTo(new Error('could not connect to DB'), res, null, 500);
         }
-       respondTo(req, res, {students: students}, 'students');
+        respondTo(null, res, students, 200);
     });
 };
 
@@ -37,50 +31,49 @@ exports.delete = function(req, res) {
     var username = req.params.username;
     Student.deleteStudent(username, function(err, result) {
         if(err) {
-            return redirectTo(req, res, 500);
+            return respondTo(req, res, 500);
         }
         if(!result) {
             // tried to remova a post that doesnt exists
-            return redirectTo(req, res, 404);
+            return respondTo(req, res, 404);
         }
-        redirectTo(req, res, 204, '/students');
+        respondTo(req, res, 204, '/students');
     });
 };
 
 exports.update = function(req, res) {
     var username = req.params.username; // ake this from the URL a la RESTful
-    var githubName = req.body.githubName;
+    var updateingStudent = req.body;
+    Student.updateStudent(username, updateingStudent, function(err, student) {
 
-    Student.updateGithubUsername(username, githubName, function(err) {
         if(err) {
-            console.log(err);
+
+            if(err.message === Messages.eng.update.usernameNotFound) {
+                res.statusCode = 404;
+                return respondTo(err, res);
+            }
+            return respondTo(err, res, null, 400);
         }
-        redirectTo(req, res, 204, '/students');
+        return respondTo(null, res, student);
     });
 };
 
 
 /**
- * Private helper function
- * Check if the user want the answer in json format
- * @param req - The request object from express
- * @returns {boolean} -
+ * Private helper for formating the answers
+ * @param req
+ * @param res
+ * @param code
+ * @returns {Request}
  */
-function wantJSON(req) {
-    return req.get('Accept') === TYPE_JSON;
-}
-
-function redirectTo(req, res, code, url) {
-    if(wantJSON(req)) {
-        return res.sendStatus(code);
+function respondTo(error, res, data, code) {
+    if(code) {
+        res.statusCode = code;
     }
-    return res.redirect(url);
-}
-
-function respondTo(req, res, data, template) {
-    if(wantJSON(req)) {
-        return res.send(JSON.stringify(data));
+    res.setHeader("Content-Type", "application/json");
+    if(error) {
+        return res.send({'errorMessage' : error.message});
     }
-    return res.render(template, data);
+    return res.send(JSON.stringify(data));
 }
 

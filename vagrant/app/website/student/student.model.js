@@ -3,7 +3,7 @@
 // the public API
 exports.createStudent = createStudent;
 exports.listStudents = listStudents;
-exports.showStudent = getStudent;
+exports.showStudent = showStudent;
 exports.deleteStudent = deleteStudent;
 exports.updateStudent = updateStudent;
 
@@ -22,7 +22,6 @@ var Messages = require('./student.Strings.js').Messages;
  * @param {function} callback - node standard callback function
  */
 function createStudent(studentObject, callback) {
-
     var username = studentObject.username;
 
     // TODO: Use mongoose unique insteed
@@ -39,9 +38,7 @@ function createStudent(studentObject, callback) {
                 if(err) {
                     return callback(err);
                 }
-                // we choose this approch for safty and correct format
-                getStudent(currentStudent.username, callback);
-
+                return callback(null, currentStudent);
             });
         }
     });
@@ -66,10 +63,9 @@ function listStudents(callback) {
  * @param {String} username - The username of the student to show
  * @param {function} callback - The node standard callback function
  */
-function getStudent(username, callback) {
+function showStudent(username, callback) {
     // lean is JSON not MongooseDocuments
     Student.findOne({username: username}, whiteList).lean().exec(function(err, doc) {
-
         if(err) {
             return callback(err);
         }
@@ -77,7 +73,7 @@ function getStudent(username, callback) {
             return callback(new Error(Messages.eng.show.usernameNotFound));
         }
         var result =  asJSON(doc); // Hmmm...?
-        return callback(null, result); // stingify the result
+        callback(null, result); // stingify the result
     });
 }
 
@@ -106,47 +102,17 @@ function deleteStudent(username, callback) {
  * @param {Object} newObject - The updated object
  * @param {function} callback - The node standard callback function
  */
-function updateStudent(username, newObject, callback) {
-
-
-    // Mongoose is stupid - First check if user exist so we can give a 404
-    getStudent(username, function(err, result) {
-
-       if(err) {
-           return callback(err);
-       }
-
-        // should not update the username
-       // console.log("result: ", result.username);
-        newObject.username = result.username;
-        var orginalUsername = result.username;
-        // Run a validation on the parameters before attempting to update the object.
-        // Construct a temporary object using the request body
-        var tmp = new Student(newObject);
-
-        tmp.validate(function(err) {
-            if (err && err.errors) {
-                //console.log(err);
-                return callback(err);
-            }
-            // check up the username, replace with newObject, just return the selected whitelist, return the newly updated object
-            Student.findOneAndUpdate({username: orginalUsername}, newObject, {select: whiteList, new: true}).lean().exec(function(err, result) {
-
-                if (err) {
-                    return callback(err);
-                }
-                if (!result) {
-                    return callback(new Error(Messages.eng.update.usernameNotFound));
-                }
-
-                callback(null, result);
-
-            });
-        });
+function updateStudent(orginalUsername, newObject, callback) {
+    // check up the username, replace with newObject, just return the selected whitelist, return the newly updated object
+    Student.findOneAndUpdate({username: orginalUsername}, newObject, {select: whiteList, new: true}).lean().exec(function(err, result) {
+        if(err) {
+            return callback(err);
+        }
+        if(!result) {
+            return callback(new Error(Messages.eng.update.usernameNotFound));
+        }
+        callback(null, result);
     });
-
-
-
 }
 
 /**

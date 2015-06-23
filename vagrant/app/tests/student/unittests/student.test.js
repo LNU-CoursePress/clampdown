@@ -31,7 +31,6 @@ describe('Students: model', function () {
            };
 
            Student.createStudent(mockObject, function(err, result) {
-               console.log(err);
                // Confirm that that an error does not exist
                should.not.exist(err);
                result.should.be.instanceof(Object).have.property('username');
@@ -230,8 +229,8 @@ describe('Students: model', function () {
 
         it('should update a student', function(done) {
             var mockObject = {
-                username: 'mats',
-                firstname: 'Mats',
+                username: 'thajostudent',
+                firstname: 'John',
                 lastname: 'Loock',
                 studentType: 'Distance',
                 startYear: new Date().getFullYear(),
@@ -248,7 +247,7 @@ describe('Students: model', function () {
                 expect(result).to.eql(mockObject);
                 // Call done to tell mocha that we are done with this test
 
-                Student.showStudent('mats', function(err, result) {
+                Student.showStudent('thajostudent', function(err, result) {
 
                     should.not.exist(err);
                     expect(result).to.eql(mockObject);
@@ -262,6 +261,7 @@ describe('Students: model', function () {
         it('should fail to update a student with wrong username', function(done) {
             var mockObject = {};
             Student.updateStudent('xxxxxx', mockObject, function(err) {
+               // console.log(err);
                 // Confirm that that an error does not exist
                 should.exist(err);
                 expect(err.message).to.eql(Messages.eng.update.usernameNotFound);
@@ -270,24 +270,16 @@ describe('Students: model', function () {
             });
         });
 
-
         it('should fail to update a student with empty object', function(done) {
             var mockObject = {};
             var testUser = 'thajostudent';
             Student.updateStudent(testUser, mockObject, function(err) {
 
-                should.not.exist(err); // the model will return the old object (not changed)
-
-                Student.showStudent(testUser, function(err, result) {
-                    expect(result.username).to.eql(testUser);
-                    done();
-                });
-
-
-
+                should.exist(err); // the model will return the old object (not changed)
+                expect(err.name).to.eql('ValidationError');
+                done();
             });
         });
-
         it('should fail to update a student with occupide username', function(done) {
             var mockObject = {
                 username: 'thajoStudent',
