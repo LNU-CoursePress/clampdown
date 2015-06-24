@@ -25,20 +25,22 @@ describe('# Students: model - Unit tests', function () {
 
 
            var mockObject = {
-               username: 'thajo',
-               firstname: 'John',
-               lastname: 'Häggerud',
-               studentType: 'Campus',
-               startYear: new Date().getFullYear(),
+               username: 'mats',
+               firstname: 'Mats',
+               lastname: 'Loock',
+               studentType: 'Distance',
                services: {
-                   github: 'thajo2'
-               }
+                   github: 'mtslck',
+                   twitter: 'mats'
+               },
+               startYear: new Date().getFullYear()
            };
 
            Student.createStudent(mockObject, function(err, result) {
                // Confirm that that an error does not exist
                should.not.exist(err);
-               result.should.be.instanceof(Object).have.property('username');
+
+               expect(result).to.eql(mockObject);
                // Call done to tell mocha that we are done with this test
                done();
            });

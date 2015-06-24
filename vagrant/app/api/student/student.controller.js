@@ -11,6 +11,7 @@ var Messages = require('./student.Strings.js').Messages;
 exports.create = function(req, res) {
     Student.createStudent(req.body, function(err, result) {
         if(err) {
+
             return respondTo(err, res, null, 400);
         }
         return respondTo(null, res, result, 201);
@@ -39,15 +40,12 @@ exports.list = function(req, res) {
 
 exports.delete = function(req, res) {
     var username = req.params.username;
-    Student.deleteStudent(username, function(err, result) {
+    Student.deleteStudent(username, function(err) {
         if(err) {
             return respondTo(req, res, 500);
         }
-        if(!result) {
-            // tried to remova a post that doesnt exists
-            return respondTo(req, res, 404);
-        }
-        respondTo(req, res, 204, '/students');
+        // if the post dont exist its all good
+        return respondTo(null, res, null, 204);
     });
 };
 

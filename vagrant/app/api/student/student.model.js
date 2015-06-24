@@ -92,9 +92,7 @@ function deleteStudent(username, callback) {
         if(err) {
             return callback(err);
         }
-        if(!result) {
-            callback(new Error(Messages.eng.delete.usernameNotFound));
-        }
+        // This is indempotent so if we call a non existing to remove is all good
         callback(null, Messages.eng.delete.success);
     });
 }
