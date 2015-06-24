@@ -1,6 +1,13 @@
 /*jshint expr: true */
 'use strict';
 
+/**
+ * This is the integration test suit responsible for
+ *      - Routing
+ *      - Status codes
+ *      - HTTP Headers
+ *      - Geting data for REST service
+ */
 
 
 // import the moongoose helper utilities

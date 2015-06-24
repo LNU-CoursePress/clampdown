@@ -1,7 +1,12 @@
 /*jshint expr: true */
 'use strict';
 
-
+/**
+ * This test suit should only test the model stuff
+ *      - CRUD operations against the db
+ *      - Validation for unsafe data methods
+ *      - Checking the data structure betwwen db and layers above
+ */
 
 // import the moongoose helper utilities
 require('../../utils');
@@ -9,7 +14,7 @@ require('../../utils');
 var should = require('chai').should();
 var expect = require('chai').expect;
 
-describe('Students: model', function () {
+describe('# Students: model - Unit tests', function () {
 
     var Student = require('../../../api/student/student.model');
     var Messages = require('../../../api/student/student.Strings.js').Messages;
@@ -123,6 +128,7 @@ describe('Students: model', function () {
         });
     });
 
+
     describe('### List students', function () {
         it('should list users in the application', function (done) {
             // Create a User object to pass to User.create()
@@ -166,6 +172,7 @@ describe('Students: model', function () {
         });
 
     });
+
 
     describe('### Show single student', function () {
         it('should show the user provided by username', function (done) {
