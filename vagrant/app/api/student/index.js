@@ -12,6 +12,7 @@ var router = express.Router();
 var studentController = require('./student.controller');
 router.post('/api/students', studentController.create);
 router.get('/api/students', studentController.list);
+router.get('/api/students/:username', studentController.show);
 router.delete('/api/students/:username', studentController.delete);
 router.patch('/api/students/:username', studentController.update);
 

@@ -18,6 +18,16 @@ exports.create = function(req, res) {
     });
 };
 
+exports.show = function(req, res) {
+    var username = req.params.username; // ake this from the URL a la RESTful
+    Student.showStudent(username, function (err, result) {
+       if(err) {
+           return respondTo(err, res, null, 404);
+       }
+       return respondTo(null, res, result, 200);
+    });
+};
+
 exports.list = function(req, res) {
     Student.listStudents(function(err, students) {
         if(err) {

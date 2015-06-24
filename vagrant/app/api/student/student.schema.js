@@ -20,5 +20,11 @@ var StudentSchema = new Schema({
     }
 });
 
+// Pre hook for `findOneAndUpdate`
+StudentSchema.pre('findOneAndUpdate', function(next) {
+    this.options.runValidators = true;
+    next();
+});
+
 // Export the User model
 exports.Student = mongoose.model('Student', StudentSchema);

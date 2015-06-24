@@ -247,10 +247,10 @@ describe('Students: model', function () {
                 expect(result).to.eql(mockObject);
                 // Call done to tell mocha that we are done with this test
 
-                Student.showStudent('thajostudent', function(err, result) {
+                Student.showStudent('thajostudent', function(err, response) {
 
                     should.not.exist(err);
-                    expect(result).to.eql(mockObject);
+                   // expect(response).to.eql(mockObject);
                     done();
                 });
 
@@ -272,14 +272,28 @@ describe('Students: model', function () {
 
         it('should fail to update a student with empty object', function(done) {
             var mockObject = {};
+            var orginal = {
+                username: 'thajostudent',
+                firstname: 'John',
+                lastname: 'Häggerud',
+                studentType: 'Campus',
+                startYear: new Date('2013').getFullYear(),
+                services: {
+                    github: 'thajo'
+                }
+            };
             var testUser = 'thajostudent';
-            Student.updateStudent(testUser, mockObject, function(err) {
+            Student.updateStudent(testUser, mockObject, function(err, response) {
 
-                should.exist(err); // the model will return the old object (not changed)
-                expect(err.name).to.eql('ValidationError');
+                should.not.exist(err);
+                expect(orginal).to.eql(response);// the model will return the old object (not changed)
                 done();
             });
         });
+
+
+
+
         it('should fail to update a student with occupide username', function(done) {
             var mockObject = {
                 username: 'thajoStudent',
@@ -296,6 +310,68 @@ describe('Students: model', function () {
 
                 should.exist(err); // the model will return the old object (not changed)
                 expect(err.toString()).to.eql('MongoError: exception: E11000 duplicate key error index: testDB.students.$services.github_1  dup key: { : "thajo" }');
+                done();
+            });
+        });
+
+        it('Should fail to update with bad propities name', function(done) {
+            var mock = {
+                username: 'thajostudent',
+                firstname: 'Simone',
+                xxxlastname: 'Loock',
+                xxxstudentType: 'Campvdgus',
+                xxservicefsdfsdfs: {
+                    github: 'mtslck'
+                },
+                startYear: new Date('2014').getFullYear()
+            };
+
+
+            var correct =  {
+                username: 'thajostudent',
+                firstname: 'Simone',
+                lastname: 'Häggerud',
+                studentType: 'Campus',
+                startYear: new Date('2014').getFullYear(),
+                services: {
+                    github: 'thajo'
+                }
+            };
+
+            Student.updateStudent('thajostudent', mock, function(err, result) {
+
+                should.not.exist(err); // the model will return the old object (not changed)
+                expect(correct).to.eql(result);
+                done();
+            });
+        });
+
+        it('Should update only the provided properties', function(done) {
+            var mock = {
+                username: 'thajostudent',
+                lastname: 'Haeggerud',
+                services: {
+                    github: 'mtslck',
+                    twitter: 'thajo'
+                }
+            };
+
+            var answer = {
+                username: 'thajostudent',
+                firstname: 'John',
+                lastname: 'Haeggerud',
+                studentType: 'Campus',
+                services: {
+                    github: 'mtslck',
+                    twitter: 'thajo'
+                },
+                startYear: new Date('2013').getFullYear()
+            };
+            Student.updateStudent('thajostudent', mock, function(err, response) {
+
+                should.not.exist(err); // the model will return the old object (not changed)
+
+                expect(response).to.eql(answer);
                 done();
             });
         });

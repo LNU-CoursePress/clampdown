@@ -38,9 +38,7 @@ describe('# Students API', function() {
                 should.not.exist(err);
                 should.equal(response.status, 200);
                 response.header.should.have.property('content-type').to.contain('application/json');
-                //    console.log(response);
                 var result = response.body;
-
                 should.equal(result.length, 2);
 
                 // Is this stupid - the data should already been tested in unit tests
@@ -191,28 +189,49 @@ describe('# Students API', function() {
                 });
         });
 
-         /* it('Should fail to update with no correct data', function(done) {
+    });
 
-              var newStudent = {
-                  username: 'thajostudent',
-                  firstname: 'Mats',
-                  lastxcname: 'Loock',
-                  studedfntType: 'Campus',
-                  servicefs: {
-                      github: 'mtslck'
-                  },
-                  startYear: new Date('2014').getFullYear()
-              };
+    describe('### /students/:username - Get', function() {
 
-              superagent.patch(URL +'/students/thajostudent')
-                  .send(newStudent)
-                .end(function(error, response) {
-                    should.equal(response.status, 400);
-                    should.exist(error); // the error from superagent
+       it('Should get a single student', function(done) {
+           var correct = {
+               username: 'thajostudent',
+               firstname: 'John',
+               lastname: 'Häggerud',
+               studentType: 'Campus',
+               services: {
+                   github: 'thajo'
+               },
+               startYear: new Date('2013').getFullYear()
+           };
+           superagent
+               .get(URL +'/students/thajostudent')
+               .set('Accept', 'application/json')
+               .end(function(err, response) {
 
+                   should.not.exist(err);
+                   expect(response.status).to.eql(200);
+                   expect(response.body).to.eql(correct);
+                   done();
+               });
+       });
+
+        it('Should get a Not Found on a bad url', function(done) {
+
+            superagent
+                .get(URL +'/students/xxxxx')
+                .set('Accept', 'application/json')
+                .end(function(err, response) {
+                    should.exist(err);
+                    expect(response.status).to.eql(404);
                     done();
                 });
-        });*/
+        });
+
+    });
+
+    describe('### /students/:username - Get', function() {
+
     });
 
 });

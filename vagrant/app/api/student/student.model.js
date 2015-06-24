@@ -108,45 +108,49 @@ function deleteStudent(username, callback) {
  */
 function updateStudent(username, newObject, callback) {
 
-
-    // Mongoose is stupid - First check if user exist so we can give a 404
-    getStudent(username, function(err, result) {
-
-       if(err) {
+    // Mongoose is stupid - First check if user exist so we can make own partial update and
+    // also have som kind of validation
+    getStudent(username, function(err, student) {
+        // couldn't find the student?
+        if(err) {
            return callback(err);
-       }
+        }
 
-        // should not update the username
-       // console.log("result: ", result.username);
-        newObject.username = result.username;
-        var orginalUsername = result.username;
-        // Run a validation on the parameters before attempting to update the object.
-        // Construct a temporary object using the request body
-        var tmp = new Student(newObject);
+        // if the provided object is empty just send the db-object back
+        if(Object.getOwnPropertyNames(newObject).length === 0) {
+           return callback(null, student);
+        }
 
+        // User should never change username
+        newObject.username = student.username;
+
+        // go through the provided Object and update all properties
+        // overwrite the props
+        for(var prop in newObject) {
+            if (student.hasOwnProperty(prop)) {
+                student[prop] = newObject[prop];
+            }
+        }
+
+        // we do validate the new object (do this for enums and stuff)
+        var tmp = new Student(student);
         tmp.validate(function(err) {
             if (err && err.errors) {
-                //console.log(err);
                 return callback(err);
             }
             // check up the username, replace with newObject, just return the selected whitelist, return the newly updated object
-            Student.findOneAndUpdate({username: orginalUsername}, newObject, {select: whiteList, new: true}).lean().exec(function(err, result) {
-
+            Student.findOneAndUpdate({username: student.username}, { $set: student}, {select: whiteList, new: true}).lean().exec(function(err, result) {
                 if (err) {
                     return callback(err);
                 }
                 if (!result) {
                     return callback(new Error(Messages.eng.update.usernameNotFound));
                 }
-
+                //console.log(result);
                 callback(null, result);
-
             });
         });
     });
-
-
-
 }
 
 /**

@@ -58,7 +58,7 @@ gulp.task('hint', function() {
 gulp.task('mocha', function() {
     gulp
         .src('./tests/**/*.js')
-        .pipe(mocha({ reporter: 'spec' }))
+        .pipe(mocha({ reporter: 'list' }))
         .on('error', function(err){ console.log(err.toString()); this.emit('end');  });// should maby log this?
 
 });
