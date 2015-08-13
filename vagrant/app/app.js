@@ -9,13 +9,12 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 
-console.log('ENviroment mode is: ', process.env.NODE_ENV);
+console.log('Enviroment mode is: ', process.env.NODE_ENV);
 
 var express = require('express');
 var config = require('./config/environment');
 
 // Connect to database
-
 if(process.env.NODE_ENV !== 'test') {
     var db = require('./dbFactory');
     db.createDbConnection(config.mongo.uri, config.mongo.options); // doesn't mind the async here - only serverstart

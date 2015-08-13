@@ -19,7 +19,7 @@ exports.seed = function(callback) {
                 studentType: 'Campus',
                 startYear: new Date('2013').getFullYear(),
                 services: {
-                    github: 'thajo'
+                    github: 'thajostudent'
                 }
             },
             {

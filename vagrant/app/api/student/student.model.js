@@ -29,6 +29,7 @@ function createStudent(studentObject, callback) {
     Student.find({username : username}, function (err, result) {
         var currentStudent = new Student(studentObject);
         if(err) {
+            console.log('Error in creating student:', err);
             return callback(err);
         }
         if (result.length){
@@ -37,6 +38,7 @@ function createStudent(studentObject, callback) {
         else {
             currentStudent.save(function(err){
                 if(err) {
+                    console.log('Error in creating student:', err);
                     return callback(err);
                 }
                 // we choose this approch for safty and correct format

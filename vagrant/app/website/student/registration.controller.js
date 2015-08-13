@@ -8,7 +8,7 @@
 'use strict';
 
 //var _ = require('lodash');
-var Student = require('./student.model');
+var Student = require('./../../api/student/student.model');
 
 // Get list of things
 exports.index = function(req, res) {

@@ -37,6 +37,9 @@ describe('# Students: model - Unit tests', function () {
            };
 
            Student.createStudent(mockObject, function(err, result) {
+               if(err) {
+                   console.log(err);
+               }
                // Confirm that that an error does not exist
                should.not.exist(err);
 
@@ -408,12 +411,12 @@ describe('# Students: model - Unit tests', function () {
            });
         });
 
-        it('should give an error if trying to delete a user that doesnt exist', function(done) {
+        it('should NOT give an error (indempotent) if trying to delete a user that doesnt exist', function(done) {
             Student.deleteStudent('xxxxxx', function(err) {
                 // Confirm that that an error does not exist
-                should.exist(err);
+                should.not.exist(err);
 
-                expect(err.message).to.eql(Messages.eng.delete.usernameNotFound);
+              //  expect(err.message).to.eql(Messages.eng.delete.usernameNotFound);
                 // Call done to tell mocha that we are done with this test
                 done();
             });

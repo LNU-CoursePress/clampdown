@@ -5,7 +5,7 @@
  */
 
 'use strict';
-var Student = require('./student.model');
+var Student = require('./../../api/student/student.model');
 var TYPE_JSON = 'application/json';
 
 exports.create = function(req, res) {

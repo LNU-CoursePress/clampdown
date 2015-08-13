@@ -13,7 +13,7 @@ var options = {
 
 
 var serverFiles = [
-    './**/*.js'
+    './app.js'
 ];
 
 gulp.task( 'server:start', function() {
