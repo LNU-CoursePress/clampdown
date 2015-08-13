@@ -41,7 +41,6 @@ function createStudent(studentObject, callback) {
                 }
                 // we choose this approch for safty and correct format
                 getStudent(currentStudent.username, callback);
-
             });
         }
     });
@@ -98,9 +97,10 @@ function deleteStudent(username, callback) {
 }
 
 /**
+ * TODO: Refactor
  * Delete a specific user by username
  * @public
- * @param {String} orginalUsername - The username of the student to update
+ * @param {String} username - The username of the student to update
  * @param {Object} newObject - The updated object
  * @param {function} callback - The node standard callback function
  */
@@ -119,7 +119,7 @@ function updateStudent(username, newObject, callback) {
            return callback(null, student);
         }
 
-        // User should never change username
+        // User should never change username so overwrite it with db-saved
         newObject.username = student.username;
 
         // go through the provided Object and update all properties
@@ -141,9 +141,9 @@ function updateStudent(username, newObject, callback) {
                 if (err) {
                     return callback(err);
                 }
-                if (!result) {
+                /*if (!result) {
                     return callback(new Error(Messages.eng.update.usernameNotFound));
-                }
+                }*/
                 //console.log(result);
                 callback(null, result);
             });

@@ -42,7 +42,7 @@ exports.delete = function(req, res) {
     var username = req.params.username;
     Student.deleteStudent(username, function(err) {
         if(err) {
-            return respondTo(req, res, 500);
+            return respondTo(err, res, null, 500);
         }
         // if the post dont exist its all good
         return respondTo(null, res, null, 204);

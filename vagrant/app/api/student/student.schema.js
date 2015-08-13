@@ -16,7 +16,9 @@ var StudentSchema = new Schema({
     services: {
         github:     {type: String, required: true, unique: true},
         linkedIn:   {type: String},
-        twitter:    {type: String}
+        twitter:    {type: String},
+        google:    {type: String},
+        facebook:    {type: String}
     }
 });
 
