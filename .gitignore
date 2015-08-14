@@ -35,3 +35,4 @@ application/.git
 **/.DS_Store
 application/.gitignore
 **/.vagrant
+**/secrets.js
