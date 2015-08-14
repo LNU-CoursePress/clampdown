@@ -1,13 +1,18 @@
 'use strict';
 // Bring Mongoose into the app
 var mongoose = require( 'mongoose' );
-
+var config = require('./config/environment');
 
 
 // CONNECTION EVENTS
 // When successfully connected
 mongoose.connection.on('connected', function () {
     console.log('Mongoose default connection is connected');
+    if(config.seedDB) {
+        require('./config/seed').seed(function() {
+            console.log('Got stuff seeded');
+        });
+    }
 });
 
 // If the connection throws an error
@@ -23,6 +28,8 @@ mongoose.connection.on('disconnected', function () {
 // When the connection is open
 mongoose.connection.on('open', function () {
     console.log('Mongoose default connection is open');
+
+
 });
 
 // If the Node process ends, close the Mongoose connection

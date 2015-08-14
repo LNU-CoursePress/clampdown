@@ -6,7 +6,48 @@
 
 var express = require('express');
 var router = express.Router();
+var keys = require("../../config/secrets.js");
+var key;
 
+// add middleware for handling API keys
+
+
+// this is checking all the requests and getting the
+// authorization header
+router.use(function (req, res, next) {
+    console.log('Time:', Date.now());
+    if (!req.headers.authorization) { // check the header
+        return res.sendStatus(401);
+    }
+    else {
+        key = req.headers.authorization;
+    }
+
+    if(req.method === "GET" || req.method === "HEAD") { // if its just a GET we allow both read and write key
+        console.log("Got a safe method");
+        if(!isReadKey(key) && !isWriteKey(key)) {
+            return res.sendStatus(401);
+        }
+    }
+    else {
+        console.log("Got a unsafe method");
+        if(!isWriteKey(key)) { // all other demands write key
+            return res.sendStatus(401);
+        }
+    }
+    next();
+});
+
+
+
+
+function isReadKey(key) {
+    return key == keys.APIReadKey;
+}
+
+function isWriteKey(key) {
+    return key == keys.APIWriteKey;
+}
 
 // This supports only JSON
 var studentController = require('./student.controller');

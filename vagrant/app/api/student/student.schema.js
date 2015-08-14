@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 
 
 // TODO: fix lowercase - fucked up!
-var studentTypes = 'campus distance'.split(' ');
+var studentTypes = 'campus distance Campus Distance'.split(' ');
 
 // define the userSchema
 var StudentSchema = new Schema({

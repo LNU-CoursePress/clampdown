@@ -9,35 +9,45 @@
 
 exports.seed = function(callback) {
     var Student = require('../api/student/student.schema.js').Student;
-    Student.remove({}, function() {
+    Student.remove({}, function(err) {
+        if(err) {
+            console.log(err);
+            return callback(err);
+        }
+        else {
+            Student.create(
+                {
+                    username: 'thajostudent',
+                    firstname: 'John',
+                    lastname: 'Häggerud',
+                    studentType: 'campus',
+                    startYear: new Date('2013').getFullYear(),
+                    services: {
+                        github: 'thajostudent'
+                    }
+                },
+                {
+                    username: 'tstjo',
+                    firstname: 'Johan',
+                    lastname: 'Leitet',
+                    studentType: 'distance',
+                    startYear: new Date('2013').getFullYear(),
+                    services: {
+                        github: 'leitet',
+                        linkedIn: 'leitet'
+                    }
+                },
+                function(err) {
+                    if(err) {
+                        console.log(err);
+                        return callback(err);
+                    }
+                    console.log('finished populating students');
+                    callback();
+                }
+            );
+        }
 
-        Student.create(
-            {
-                username: 'thajostudent',
-                firstname: 'John',
-                lastname: 'Häggerud',
-                studentType: 'Campus',
-                startYear: new Date('2013').getFullYear(),
-                services: {
-                    github: 'thajostudent'
-                }
-            },
-            {
-                username: 'tstjo',
-                firstname: 'Johan',
-                lastname: 'Leitet',
-                studentType: 'Distance',
-                startYear: new Date('2013').getFullYear(),
-                services: {
-                    github: 'leitet',
-                    linkedIn: 'leitet'
-                }
-            },
-            function() {
-                console.log('finished populating students');
-                callback();
-            }
-        );
 
     });
 
