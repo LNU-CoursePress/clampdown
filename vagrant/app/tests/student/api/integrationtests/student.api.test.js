@@ -20,6 +20,8 @@ var expect = require('chai').expect;
 var superagent = require('superagent');
 var URL = 'http://localhost:3000/api';
 
+var keys = require('../../../../config/secrets.js');
+
 var Messages = require('../../../../api/student/student.Strings.js').Messages;
 
 describe('# Students API', function() {
@@ -36,10 +38,12 @@ describe('# Students API', function() {
     });
 
     describe('### /api/students', function() {
+
         it('should list all the students', function(done) {
             superagent
             .get(URL +'/students')
             .set('Accept', 'application/json')
+            .set('Authorization', keys.APIReadKey)
             .end(function(err, response) {
 
                 should.not.exist(err);
@@ -69,7 +73,7 @@ describe('# Students API', function() {
                     studentType: 'Distance',
                     services: {
                         github: 'leitet',
-                        linkedIn: 'leitet'
+                        linkedin: 'leitet'
                     },
                     startYear: new Date('2013').getFullYear()
                 };
@@ -79,13 +83,13 @@ describe('# Students API', function() {
             });
         });
 
-
         it('should return an empty array if no students', function(done) {
             var Student = require('../../../../api/student/student.schema.js').Student;
             Student.remove({}, function() {
                 superagent
                     .get(URL +'/students')
                     .set('Accept', 'application/json')
+                    .set('Authorization', keys.APIReadKey)
                     .end(function(err, res) {
                         expect(res.body).to.be.empty;
                         should.equal(res.status, 200);
@@ -98,6 +102,7 @@ describe('# Students API', function() {
 
 
     describe('### /students - Post/Create', function() {
+
         it('Should create a new student', function(done) {
             var newStudent = {
                 username: 'mats',
@@ -112,6 +117,7 @@ describe('# Students API', function() {
            superagent.post(URL +'/students')
                .set('Content-Type', 'application/json')
                .set('Accept', 'application/json')
+               .set('Authorization', keys.APIWriteKey)
                .send(newStudent)
                .end(function(err, res) {
                    should.equal(res.status, 201);
@@ -132,6 +138,9 @@ describe('# Students API', function() {
                 startYear: new Date('2014').getFullYear()
             };
             superagent.post(URL +'/students')
+                .set('Content-Type', 'application/json')
+                .set('Accept', 'application/json')
+                .set('Authorization', keys.APIWriteKey)
                 .send(newStudent)
                 .end(function(error, response) {
                     should.equal(response.status, 400);
@@ -143,6 +152,9 @@ describe('# Students API', function() {
 
         it('Should fail to create student when no data provided', function(done) {
             superagent.post(URL +'/students')
+                .set('Content-Type', 'application/json')
+                .set('Accept', 'application/json')
+                .set('Authorization', keys.APIWriteKey)
                 .end(function(error, response) {
                     should.equal(response.status, 400);
                     should.exist(error); // the error from superagent
@@ -153,7 +165,8 @@ describe('# Students API', function() {
     });
 
     describe('### /students - Patch/Update', function() {
-        it('Should update a existing student', function(done) {
+
+       it('Should update a existing student', function(done) {
             var newStudent = {
                 username: 'thajostudent',
                 firstname: 'Mats',
@@ -167,6 +180,7 @@ describe('# Students API', function() {
             superagent.patch(URL +'/students/' +newStudent.username)
                 .set('Content-Type', 'application/json')
                 .set('Accept', 'application/json')
+                .set('Authorization', keys.APIWriteKey)
                 .send(newStudent)
                 .end(function(err, res) {
                     should.equal(res.status, 200);
@@ -187,6 +201,9 @@ describe('# Students API', function() {
                 startYear: new Date('2014').getFullYear()
             };
            superagent.patch(URL +'/students/' +newStudent.username)
+               .set('Content-Type', 'application/json')
+               .set('Accept', 'application/json')
+               .set('Authorization', keys.APIWriteKey)
                 .send(newStudent)
                 .end(function(error, response) {
                     should.equal(response.status, 404);
@@ -196,6 +213,32 @@ describe('# Students API', function() {
                 });
         });
 
+    });
+
+    describe('### /students/:username - Delete', function() {
+       it('Should delete a user', function(done) {
+           superagent.del(URL +'/students/thajostudent')
+               .set('Content-Type', 'application/json')
+               .set('Accept', 'application/json')
+               .set('Authorization', keys.APIWriteKey)
+               .send()
+               .end(function(err, res) {
+                   should.equal(res.status, 204);
+                   done();
+               });
+       });
+
+        it('Should give a 204 if trying to delete a non existing user', function(done) {
+            superagent.del(URL +'/students/saasdasdasd')
+                .set('Content-Type', 'application/json')
+                .set('Accept', 'application/json')
+                .set('Authorization', keys.APIWriteKey)
+                .send()
+                .end(function(err, res) {
+                    should.equal(res.status, 204);
+                    done();
+                });
+        });
     });
 
     describe('### /students/:username - Get', function() {
@@ -213,7 +256,10 @@ describe('# Students API', function() {
            };
            superagent
                .get(URL +'/students/thajostudent')
+
+               .set('Content-Type', 'application/json')
                .set('Accept', 'application/json')
+               .set('Authorization', keys.APIReadKey)
                .end(function(err, response) {
 
                    should.not.exist(err);
@@ -223,11 +269,12 @@ describe('# Students API', function() {
                });
        });
 
-        it('Should get a Not Found on a bad url', function(done) {
+       it('Should get a Not Found on a bad url', function(done) {
 
             superagent
                 .get(URL +'/students/xxxxx')
                 .set('Accept', 'application/json')
+                .set('Authorization', keys.APIReadKey)
                 .end(function(err, response) {
                     should.exist(err);
                     expect(response.status).to.eql(404);
@@ -237,8 +284,89 @@ describe('# Students API', function() {
 
     });
 
-    describe('### /students/:username - Get', function() {
+    describe('### Should not be allowed', function() {
+
+        it('Should get a 401 back if no Authorization header is present', function(done) {
+            superagent
+                .get(URL +'/students')
+                .set('Accept', 'application/json')
+                .end(function(err, response) {
+                    should.exist(err);
+                    expect(response.status).to.eql(401);
+                    done();
+                });
+        });
+
+        it('Should get a 401 back if wrong Authorization header is present', function(done) {
+            superagent
+                .get(URL +'/students')
+                .set('Accept', 'application/json')
+                .set('Authorization', 'aslkdfhjsdjhfjkshdfkjhsdk')
+                .end(function(err, response) {
+                    should.exist(err);
+                    expect(response.status).to.eql(401);
+                    done();
+                });
+        });
+
+        it('Should get a 401 back if trying to POST with readkey', function(done) {
+            var newStudent = {
+                username: 'mats',
+                firstname: 'Mats',
+                lastname: 'Loock',
+                studentType: 'Campus',
+                services: {
+                    github: 'mtslck'
+                },
+                startYear: new Date('2014').getFullYear()
+            };
+            superagent.post(URL +'/students')
+                .set('Content-Type', 'application/json')
+                .set('Accept', 'application/json')
+                .set('Authorization', keys.APIReadKey)
+                .send(newStudent)
+                .end(function(err, res) {
+                    should.equal(res.status, 401);
+                    done();
+                });
+        });
+
+        it('Should get a 401 back if trying to PATCH with readkey', function(done) {
+            var newStudent = {
+                username: 'thajostudent',
+                firstname: 'Mats',
+                lastname: 'Loock',
+                studentType: 'Campus',
+                services: {
+                    github: 'mtslck'
+                },
+                startYear: new Date('2014').getFullYear()
+            };
+            superagent.patch(URL +'/students/' +newStudent.username)
+                .set('Content-Type', 'application/json')
+                .set('Accept', 'application/json')
+                .set('Authorization', keys.APIReadKey)
+                .send(newStudent)
+                .end(function(err, res) {
+                    should.equal(res.status, 401);
+                    done();
+                });
+        });
+
+        it('Should get a 401 back if trying to DELETE with readkey', function(done) {
+
+            superagent.del(URL +'/students/thajostudent')
+                .set('Content-Type', 'application/json')
+                .set('Accept', 'application/json')
+                .set('Authorization', keys.APIReadKey)
+                .end(function(err, res) {
+                    should.equal(res.status, 401);
+                    done();
+                });
+        });
 
     });
+
+    // TODO: Write test for deleteing
 
 });

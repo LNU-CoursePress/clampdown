@@ -34,7 +34,7 @@ exports.seed = function(callback) {
                     startYear: new Date('2013').getFullYear(),
                     services: {
                         github: 'leitet',
-                        linkedIn: 'leitet'
+                        linkedin: 'leitet'
                     }
                 },
                 function(err) {
@@ -42,7 +42,7 @@ exports.seed = function(callback) {
                         console.log(err);
                         return callback(err);
                     }
-                    console.log('finished populating students');
+                  //  console.log('finished populating students');
                     callback();
                 }
             );

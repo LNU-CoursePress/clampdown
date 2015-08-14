@@ -38,7 +38,7 @@ function createStudent(studentObject, callback) {
         else {
             currentStudent.save(function(err){
                 if(err) {
-                    console.log('Error in creating student:', err);
+                    //console.log('Error in creating student:', err);
                     return callback(err);
                 }
                 // we choose this approch for safty and correct format

@@ -31,11 +31,11 @@ exports.seed = function(callback) {
                 startYear: new Date('2013').getFullYear(),
                 services: {
                     github: 'leitet',
-                    linkedIn: 'leitet'
+                    linkedin: 'leitet'
                 }
             },
             function() {
-                //console.log('finished populating students');
+                console.log(' TEST : finished populating students');
                 callback();
             }
         );

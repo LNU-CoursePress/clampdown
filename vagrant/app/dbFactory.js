@@ -8,11 +8,6 @@ var config = require('./config/environment');
 // When successfully connected
 mongoose.connection.on('connected', function () {
     console.log('Mongoose default connection is connected');
-    if(config.seedDB) {
-        require('./config/seed').seed(function() {
-            console.log('Got stuff seeded');
-        });
-    }
 });
 
 // If the connection throws an error
