@@ -5,22 +5,24 @@ var Schema = mongoose.Schema;
 
 
 // TODO: fix lowercase - fucked up!
-var studentTypes = 'Campus Distance campus distance'.split(' ');
+var studentTypes = 'campus distance'.split(' ');
 
 // define the userSchema
 var StudentSchema = new Schema({
     firstname:      {type: String, required: false, maxLength: 25},
     lastname:       {type: String, required: false, maxLength: 50},
+    personNumber:   {type: String},
     username:       {type: String, required: true, index: true, unique: true},
     studentType:    {type: String, enum: studentTypes, required: true},
     startYear:      {type: Number, default: new Date().getFullYear() },
     services: {
         github:     {type: String, required: true, unique: true},
-        linkedIn:   {type: String},
+        linkedin:   {type: String},
         twitter:    {type: String},
         google:    {type: String},
         facebook:    {type: String}
-    }
+    },
+    metaData: {type: Object}
 });
 
 // Pre hook for `findOneAndUpdate`

@@ -4,7 +4,7 @@ var obj = {
     eng: {
         create: {
             usernameTaken: 'Username is already taken!',
-            noData: 'Correct data was not propvided'
+            noData: 'Correct data was not provided'
         },
         show: {
             usernameNotFound: 'The user was not found!'
