@@ -44,6 +44,7 @@ router.get('/api/students/:username', studentController.show);
 router.delete('/api/students/:username', studentController.delete);
 router.patch('/api/students/:username', studentController.update);
 
+
 module.exports = router;
 
 // Private help methods
