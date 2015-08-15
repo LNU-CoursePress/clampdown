@@ -7,10 +7,11 @@
   "private": true,
   "author": "John Häggerud <john.haggerud@lnu.se>",
   "scripts": {
-    "gulp": "gulp",
+    "start": "gulp default",
     "gulp:default": "gulp default",
     "gulp:debug": "gulp debug",
-    "test": "gulp test"
+    "test": "gulp test",
+    "production": "NODE_ENV=production node app.js"
   },
   "devDependencies": {
     "gulp": "^3.6.0",
@@ -25,7 +26,7 @@
     "method-override": "^2.3.3",
     "gulp-mocha": "^2.1.0",
     "jshint-stylish": "^2.0.0",
-    "chai": "~2.3.0",
+    "chai": "^3.2.0",
     "superagent": "^1.2.0"
   },
   "dependencies": {

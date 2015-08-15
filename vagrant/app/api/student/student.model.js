@@ -29,7 +29,6 @@ function createStudent(studentObject, callback) {
     Student.find({username : username}, function (err, result) {
         var currentStudent = new Student(studentObject);
         if(err) {
-            console.log('Error in creating student:', err);
             return callback(err);
         }
         if (result.length){
