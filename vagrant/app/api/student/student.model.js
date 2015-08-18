@@ -123,11 +123,11 @@ function updateStudent(username, newObject, callback) {
         newObject.username = student.username;
 
         // go through the provided Object and update all properties
-        // overwrite the props
+        // overwrite the props - TODO: This makes the result order to look diffrent - Look into it
         for(var prop in newObject) {
-            if (student.hasOwnProperty(prop)) {
+            //if (student.hasOwnProperty(prop)) { // removed this - didnt allow update with new fields
                 student[prop] = newObject[prop];
-            }
+            //}
         }
 
         // we do validate the new object (do this for enums and stuff)

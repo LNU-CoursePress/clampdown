@@ -36,12 +36,29 @@ StudentSchema.pre('findOneAndUpdate', function(next) {
 
 StudentSchema.pre('save', function (next) {
     if(this.city) {
-        var city = this.city.toLowerCase();
-        this.city = city.charAt(0).toUpperCase() + city.slice(1);
+        this.city = normalizeCity(this.city);
     }
 
     next();
 });
+
+
+// Does not work as I wanted https://github.com/Automattic/mongoose/issues/964
+/*
+StudentSchema.pre('findOneAndUpdate', function (next) {
+
+    if(this.city) {
+        this.city = normalizeCity(this.city);
+    }
+    next();
+});
+*/
+
+function normalizeCity(city) {
+    var c = city.toLowerCase();
+    return c.charAt(0).toUpperCase() + c.slice(1);
+
+}
 
 // Export the User model
 exports.Student = mongoose.model('Student', StudentSchema);

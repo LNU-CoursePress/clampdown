@@ -161,6 +161,7 @@ describe('# Students: model - Unit tests', function () {
 
 
     describe('### Show single student', function () {
+
         it('should show the user provided by username', function (done) {
             // Create a User object to pass to User.create()
 
@@ -228,7 +229,8 @@ describe('# Students: model - Unit tests', function () {
                 studentType: 'Distance',
                 services: {
                     github: 'mtslk'
-                }
+                },
+                city: 'Norrköping'
             };
 
             Student.updateStudent('thajostudent', mockObject, function(err, result) {
@@ -237,6 +239,8 @@ describe('# Students: model - Unit tests', function () {
                 // Confirm that that an error does not exist
                 should.not.exist(err);
                 delete result.created;
+
+                //mockObject.city = 'Norrköping';
                 expect(result).to.eql(mockObject);
                 // Call done to tell mocha that we are done with this test
 
