@@ -21,7 +21,6 @@ exports.seed = function(callback) {
                     firstname: 'John',
                     lastname: 'Häggerud',
                     studentType: 'campus',
-                    startYear: new Date('2013').getFullYear(),
                     services: {
                         github: 'thajostudent'
                     }
@@ -31,7 +30,6 @@ exports.seed = function(callback) {
                     firstname: 'Johan',
                     lastname: 'Leitet',
                     studentType: 'distance',
-                    startYear: new Date('2013').getFullYear(),
                     services: {
                         github: 'leitet',
                         linkedin: 'leitet'

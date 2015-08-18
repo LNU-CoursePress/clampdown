@@ -136,7 +136,7 @@ function updateStudent(username, newObject, callback) {
             if (err && err.errors) {
                 return callback(err);
             }
-            // check up the username, replace with newObject, just return the selected whitelist, return the newly updated object
+            // check up the username, replace with newObject, just return the selected whitelist, return the newly(new:true) updated object
             Student.findOneAndUpdate({username: student.username}, { $set: student}, {select: whiteList, new: true}).lean().exec(function(err, result) {
                 if (err) {
                     return callback(err);

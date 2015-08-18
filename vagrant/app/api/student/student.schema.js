@@ -15,7 +15,7 @@ var StudentSchema = new Schema({
     city:           {type: String},
     username:       {type: String, required: true, index: true, unique: true},
     studentType:    {type: String, enum: studentTypes, required: true},
-    created:        {type: Date, default: new Date() },
+    created:        {type: Date},
     program:        {type: String},
     services: {
         github:     {type: String, required: true, unique: true},
@@ -37,6 +37,13 @@ StudentSchema.pre('findOneAndUpdate', function(next) {
 StudentSchema.pre('save', function (next) {
     if(this.city) {
         this.city = normalizeCity(this.city);
+    }
+
+    var now = new Date();
+
+    if ( !this.created ) {
+
+        this.created = now;
     }
 
     next();
