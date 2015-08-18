@@ -25,7 +25,6 @@ function createStudent(studentObject, callback) {
 
     var username = studentObject.username;
 
-    // TODO: Use mongoose unique insteed
     Student.find({username : username}, function (err, result) {
         var currentStudent = new Student(studentObject);
         if(err) {

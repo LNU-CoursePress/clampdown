@@ -13,6 +13,7 @@ var compression = require('compression');
 var path = require('path');
 var config = require('./environment');
 var exphbs = require('express-handlebars');
+var cors = require('cors');
 
 
 module.exports = function(app) {
@@ -21,9 +22,17 @@ module.exports = function(app) {
     app.engine('.html', exphbs({defaultLayout: 'home', extname: '.html'}));
     app.set('view engine', '.html');
 
+
     app.use(compression());
     app.use(bodyParser.urlencoded({ extended: false }));
+    /*function defaultContentTypeMiddleware (req, res, next) {
+        req.headers['content-type'] = req.headers['content-type'] || 'application/json';
+        next();
+    }
+
+    app.use(defaultContentTypeMiddleware);*/
     app.use(bodyParser.json());
+    app.use(cors());
     // override with POST having ?_method=DELETE
     app.use(methodOverride('_method'));
 

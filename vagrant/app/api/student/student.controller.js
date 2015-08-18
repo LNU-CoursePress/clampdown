@@ -9,6 +9,7 @@ var Student = require('./student.model');
 var Messages = require('./student.Strings.js').Messages;
 
 exports.create = function(req, res) {
+    console.log(req.body);
     Student.createStudent(req.body, function(err, result) {
         if(err) {
 

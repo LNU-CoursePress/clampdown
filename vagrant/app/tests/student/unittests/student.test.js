@@ -21,7 +21,7 @@ describe('# Students: model - Unit tests', function () {
 
 
     describe('### Create Students', function() {
-       it('should create a student', function(done) {
+        it('should create a student', function(done) {
 
 
            var mockObject = {
@@ -29,11 +29,12 @@ describe('# Students: model - Unit tests', function () {
                firstname: 'Mats',
                lastname: 'Loock',
                studentType: 'Distance',
+               program: 'WP2015',
+               city: 'kalmar',
                services: {
                    github: 'mtslck',
                    twitter: 'mats'
-               },
-               startYear: new Date().getFullYear()
+               }
            };
 
            Student.createStudent(mockObject, function(err, result) {
@@ -42,6 +43,13 @@ describe('# Students: model - Unit tests', function () {
                }
                // Confirm that that an error does not exist
                should.not.exist(err);
+
+               // cant do deep checking with created date so remove it
+               delete result.created;
+
+               // check that we updat ethe city korrekt
+               var city = mockObject.city.toLowerCase();
+               mockObject.city = city.charAt(0).toUpperCase() + city.slice(1);
 
                expect(result).to.eql(mockObject);
                // Call done to tell mocha that we are done with this test
@@ -55,7 +63,7 @@ describe('# Students: model - Unit tests', function () {
                 firstname: 'John',
                 lastname: 'Häggerud',
                 studentType: 'Campus',
-                startYear: new Date().getFullYear(),
+                created: new Date(),
                 services: {
                     github: 'thajo'
                 }
@@ -145,33 +153,6 @@ describe('# Students: model - Unit tests', function () {
                 // verify that the returned user is what we expect
                 result.should.be.instanceof(Array).and.have.lengthOf(2);
 
-                var obj1 = {
-                    username: 'thajostudent',
-                    firstname: 'John',
-                    lastname: 'Häggerud',
-                    studentType: 'Campus',
-                    services: {
-                        github: 'thajo'
-                    },
-                    startYear: new Date('2013').getFullYear()
-                };
-
-                expect(result[0]).to.eql(obj1);
-
-                var obj2 = {
-                    username: 'tstjo',
-                    firstname: 'Johan',
-                    lastname: 'Leitet',
-                    studentType: 'Distance',
-                    services: {
-                        github: 'leitet',
-                        linkedin: 'leitet'
-                    },
-                    startYear: new Date('2013').getFullYear()
-                };
-
-                expect(result[1]).to.eql(obj2);
-
                 done();
             });
         });
@@ -196,10 +177,10 @@ describe('# Students: model - Unit tests', function () {
                     studentType: 'Campus',
                     services: {
                         github: 'thajo'
-                    },
-                    startYear: new Date('2013').getFullYear()
-                };
+                    }
 
+                };
+                delete result.created; // remove for deep check
                 expect(result).to.eql(obj1);
 
                 done();
@@ -245,7 +226,6 @@ describe('# Students: model - Unit tests', function () {
                 firstname: 'John',
                 lastname: 'Loock',
                 studentType: 'Distance',
-                startYear: new Date().getFullYear(),
                 services: {
                     github: 'mtslk'
                 }
@@ -256,6 +236,7 @@ describe('# Students: model - Unit tests', function () {
 
                 // Confirm that that an error does not exist
                 should.not.exist(err);
+                delete result.created;
                 expect(result).to.eql(mockObject);
                 // Call done to tell mocha that we are done with this test
 
@@ -289,7 +270,6 @@ describe('# Students: model - Unit tests', function () {
                 firstname: 'John',
                 lastname: 'Häggerud',
                 studentType: 'Campus',
-                startYear: new Date('2013').getFullYear(),
                 services: {
                     github: 'thajo'
                 }
@@ -298,6 +278,7 @@ describe('# Students: model - Unit tests', function () {
             Student.updateStudent(testUser, mockObject, function(err, response) {
 
                 should.not.exist(err);
+                delete response.created;
                 expect(orginal).to.eql(response);// the model will return the old object (not changed)
                 done();
             });
@@ -314,8 +295,7 @@ describe('# Students: model - Unit tests', function () {
                 studentType: 'Campus',
                 services: {
                     github: 'thajo'
-                },
-                startYear: new Date('2013').getFullYear()
+                }
             };
             var testUser = 'tstjo';
             Student.updateStudent(testUser, mockObject, function(err) {
@@ -344,7 +324,6 @@ describe('# Students: model - Unit tests', function () {
                 firstname: 'Simone',
                 lastname: 'Häggerud',
                 studentType: 'Campus',
-                startYear: new Date('2014').getFullYear(),
                 services: {
                     github: 'thajo'
                 }
@@ -353,6 +332,7 @@ describe('# Students: model - Unit tests', function () {
             Student.updateStudent('thajostudent', mock, function(err, result) {
 
                 should.not.exist(err); // the model will return the old object (not changed)
+                delete result.created;
                 expect(correct).to.eql(result);
                 done();
             });
@@ -376,13 +356,12 @@ describe('# Students: model - Unit tests', function () {
                 services: {
                     github: 'mtslck',
                     twitter: 'thajo'
-                },
-                startYear: new Date('2013').getFullYear()
+                }
             };
             Student.updateStudent('thajostudent', mock, function(err, response) {
 
                 should.not.exist(err); // the model will return the old object (not changed)
-
+                delete response.created;
                 expect(response).to.eql(answer);
                 done();
             });
