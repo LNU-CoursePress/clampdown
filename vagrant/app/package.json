@@ -18,7 +18,7 @@
     "gulp": "^3.6.0",
     "gulp-develop-server": "^0.3.0",
     "gulp-istanbul": "^0.10.0",
-    "gulp-jshint": "^1.11.0",
+    "gulp-jshint": "^1.11.2",
     "gulp-livereload": "^3.8.0",
     "gulp-mocha": "^2.1.0",
     "gulp-plumber": "^0.6.3",

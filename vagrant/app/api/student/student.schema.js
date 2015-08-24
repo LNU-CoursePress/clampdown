@@ -1,11 +1,10 @@
-'use strict';
+"use strict";
 
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
-
 // TODO: fix lowercase - fucked up!
-var studentTypes = 'campus distance Campus Distance'.split(' ');
+var studentTypes = "campus distance Campus Distance".split(" ");
 
 // define the userSchema
 var StudentSchema = new Schema({
@@ -28,27 +27,24 @@ var StudentSchema = new Schema({
 });
 
 // Pre hook for `findOneAndUpdate`
-StudentSchema.pre('findOneAndUpdate', function(next) {
+StudentSchema.pre("findOneAndUpdate", function(next) {
     this.options.runValidators = true;
     next();
 });
 
-
-StudentSchema.pre('save', function (next) {
-    if(this.city) {
+StudentSchema.pre("save", function(next) {
+    if (this.city) {
         this.city = normalizeCity(this.city);
     }
 
     var now = new Date();
 
-    if ( !this.created ) {
-
+    if (!this.created) {
         this.created = now;
     }
 
     next();
 });
-
 
 // Does not work as I wanted https://github.com/Automattic/mongoose/issues/964
 /*
@@ -68,4 +64,4 @@ function normalizeCity(city) {
 }
 
 // Export the User model
-exports.Student = mongoose.model('Student', StudentSchema);
+exports.Student = mongoose.model("Student", StudentSchema);
