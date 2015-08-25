@@ -1,14 +1,11 @@
 /**
  * Main application routes
  */
-
-'use strict';
+"use strict";
 
 module.exports = function(app) {
 
-    app.use('/', require('./api/student'));
-    app.use('/', require('./api/github'));
-
-
+    app.use("/", require("./api/student"));
+    app.use("/", require("./api/github"));
 
 };
