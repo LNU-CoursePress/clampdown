@@ -17,8 +17,8 @@ module.exports = function(app) {
     var env = app.get("env");
 
     // Configure the handlebar
-    app.engine(".html", exphbs({defaultLayout: "home", extname: ".html"}));
-    app.set("view engine", ".html");
+    //app.engine(".html", exphbs({defaultLayout: "home", extname: ".html"}));
+    //app.set("view engine", ".html");
 
     app.use(compression());
     app.use(bodyParser.urlencoded({ extended: false }));

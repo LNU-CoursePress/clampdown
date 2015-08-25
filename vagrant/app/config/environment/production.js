@@ -9,10 +9,14 @@ module.exports = {
 
     // Server port
     port:
-        process.env.PORT || 8000,
+        process.env.PORT || 3000,
 
     // MongoDB connection options
     mongo: {
         uri:    "mongodb://localhost/students"
+    },
+    secrets: {
+        APIReadKey:     process.env["APIReadKey"],
+        APIWriteKey:    process.env["APIWriteKey"]
     }
 };

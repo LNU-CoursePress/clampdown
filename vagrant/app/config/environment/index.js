@@ -9,21 +9,13 @@ var all = {
     env: process.env.NODE_ENV,
 
     // Root path of server/application
-    root: path.normalize(__dirname + '/../..'),
+    root: path.normalize(__dirname + "/../.."),
 
     // Server port
     port: process.env.PORT || 3000,
 
     // Should we populate the DB with sample data?
     seedDB: false,
-
-    // Secret for session, you will want to change this and make it an environment variable
-    secrets: {
-        session: 'test-secret'
-    },
-
-    // List of user roles
-    //userRoles: ['guest', 'user', 'admin'],
 
     // MongoDB connection options
     mongo: {

@@ -1,5 +1,5 @@
 /*jshint expr: true */
-'use strict';
+"use strict";
 
 /**
  * This is the integration test suit responsible for
@@ -9,20 +9,19 @@
  *      - Geting data for REST service
  */
 
-require('../../utils');
+require("../../utils");
 
+//var server = require("../../../app.js");
+var should = require("chai").should();
+//var expect = require("chai").expect;
+var superagent = require("superagent");
+var URL = "http://localhost:3000/api";
 
-var server = require('../../../app.js');
-var should = require('chai').should();
-var expect = require('chai').expect;
-var superagent = require('superagent');
-var URL = 'http://localhost:3000/api';
-
-var keys = require('../../../config/secrets.js');
+var keys = require("../../../config/environment").secrets;
 
 describe("#### Integrationtest - GitHub ###", function() {
 
-    var app;
+    //var app;
 
     before(function() {
         //app = server;
@@ -34,30 +33,26 @@ describe("#### Integrationtest - GitHub ###", function() {
 
     it("Should return a user object from github", function(done) {
         superagent
-            .get(URL +'/github/thajo')
-            .set('Accept', 'application/json')
-            .set('Authorization', keys.APIReadKey)
+            .get(URL + "/github/thajo")
+            .set("Accept", "application/json")
+            .set("Authorization", keys.APIReadKey)
             .end(function(err, response) {
 
                 should.not.exist(err);
                 should.equal(response.status, 200);
                 done();
-        });
-
+            });
     });
 
     it("Should return a 404 when a non user is called", function(done) {
         superagent
-            .get(URL +'/github/thajoasjdkljasldjaklsd')
-            .set('Accept', 'application/json')
-            .set('Authorization', keys.APIReadKey)
+            .get(URL + "/github/thajoasjdkljasldjaklsd")
+            .set("Accept", "application/json")
+            .set("Authorization", keys.APIReadKey)
             .end(function(err, response) {
 
                 should.equal(response.status, 404);
                 done();
             });
-
     });
-
-
 });

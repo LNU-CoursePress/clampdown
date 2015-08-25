@@ -7,5 +7,9 @@ module.exports = {
     mongo: {
         uri: 'mongodb://localhost/testDB'
     },
-    seedDB: true
+    seedDB: true,
+    secrets: {
+        APIReadKey: "/QbDMw/2413dQ1FzraHwsFipdbmTMGMcBLWGg2o+",
+        APIWriteKey: "SoS8P4O+EguOqib8zXmpQ0XjZfDMlVq1kOgOaNmB"
+    }
 };

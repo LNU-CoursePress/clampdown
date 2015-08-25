@@ -6,7 +6,7 @@
 
 var express = require("express");
 var router = express.Router();
-var keys = require("../../config/secrets.js");
+var keys = require("../../config/environment").secrets;
 var key;
 
 // add middleware for handling API keys
