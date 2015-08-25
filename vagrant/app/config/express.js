@@ -1,52 +1,42 @@
 /**
  This is a global configuration file for the express framework
  */
-'use strict';
+"use strict";
 
-
-var express = require('express');
-var bodyParser = require('body-parser');
-var morgan = require('morgan');             // log requests to the console (express4)
-var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
-var compression = require('compression');
-//var errorHandler = require('errorhandler');
-var path = require('path');
-var config = require('./environment');
-var exphbs = require('express-handlebars');
-var cors = require('cors');
-
+var express = require("express");
+var bodyParser = require("body-parser");
+var morgan = require("morgan");             // log requests to the console (express4)
+var methodOverride = require("method-override"); // simulate DELETE and PUT (express4)
+var compression = require("compression");
+var path = require("path");
+var config = require("./environment");
+var exphbs = require("express-handlebars");
+var cors = require("cors");
 
 module.exports = function(app) {
-    var env = app.get('env');
-    // Configure the handlebar
-    app.engine('.html', exphbs({defaultLayout: 'home', extname: '.html'}));
-    app.set('view engine', '.html');
+    var env = app.get("env");
 
+    // Configure the handlebar
+    app.engine(".html", exphbs({defaultLayout: "home", extname: ".html"}));
+    app.set("view engine", ".html");
 
     app.use(compression());
     app.use(bodyParser.urlencoded({ extended: false }));
-    /*function defaultContentTypeMiddleware (req, res, next) {
-        req.headers['content-type'] = req.headers['content-type'] || 'application/json';
-        next();
-    }
-
-    app.use(defaultContentTypeMiddleware);*/
     app.use(bodyParser.json());
     app.use(cors());
-    // override with POST having ?_method=DELETE
-    app.use(methodOverride('_method'));
 
-    if ('production' === env) {
-        app.use(express.static(path.join(config.root, 'public')));
-        app.set('appPath', config.root + '/public');
-        app.use(morgan('tiny'));
+    // override with POST having ?_method=DELETE
+    app.use(methodOverride("_method"));
+
+    if (env === "production") {
+        app.use(express.static(path.join(config.root, "public")));
+        app.set("appPath", config.root + "/public");
+        app.use(morgan("tiny"));
     }
 
-    if ('development' === env || 'test' === env) {
-        app.use(express.static(path.join(config.root, '.tmp')));
-        app.use(express.static(path.join(config.root, 'client')));
-        //app.set('appPath', 'client');
-        app.use(morgan('dev'));
-        //app.use(errorHandler()); // Error handler - has to be last
+    if (env === "development" || env === "test") {
+        app.use(express.static(path.join(config.root, ".tmp")));
+        app.use(express.static(path.join(config.root, "client")));
+        app.use(morgan("dev"));
     }
 };
