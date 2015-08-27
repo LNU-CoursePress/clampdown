@@ -8,7 +8,7 @@ var studentTypes = "campus distance Campus Distance".split(" ");
 
 // define the userSchema
 var StudentSchema = new Schema({
-    firstname:      {type: String, required: false, maxLength: 25},
+    firstname:      {type: String, required: false, maxLength: 50},
     lastname:       {type: String, required: false, maxLength: 50},
     personNumber:   {type: String},
     city:           {type: String},
