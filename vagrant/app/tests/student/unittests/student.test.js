@@ -33,7 +33,8 @@ describe('# Students: model - Unit tests', function () {
                city: 'kalmar',
                services: {
                    github: 'mtslck',
-                   twitter: 'mats'
+                   twitter: 'mats',
+                   skype: "masse"
                }
            };
 

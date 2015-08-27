@@ -21,7 +21,8 @@ var StudentSchema = new Schema({
         linkedin:   {type: String},
         twitter:    {type: String},
         google:     {type: String},
-        facebook:   {type: String}
+        facebook:   {type: String},
+        skype:      {type: String}
     },
     metaData: {type: Object}
 });

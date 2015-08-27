@@ -120,6 +120,29 @@ describe("# Students API", function() {
                });
         });
 
+        it("Should create a new student adding skype", function(done) {
+            var newStudent = {
+                username: "mats",
+                firstname: "Mats",
+                lastname: "Loock",
+                studentType: "Campus",
+                services: {
+                    github: "mtslck",
+                    skype: "masse"
+                }
+            };
+            superagent.post(URL +"/students")
+                .set("Content-Type", "application/json")
+                .set("Accept", "application/json")
+                .set("Authorization", keys.APIWriteKey)
+                .send(newStudent)
+                .end(function(err, res) {
+                    should.equal(res.status, 201);
+
+                    done();
+                });
+        });
+
         it("Should fail to create student with taken username", function(done) {
             var newStudent = {
                 username: "thajostudent",
