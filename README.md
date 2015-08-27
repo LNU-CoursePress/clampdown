@@ -1,4 +1,5 @@
 # clampdown
-Nod.js project, collecting students github information
+Nodejs REST API for handling meta data about students and stuff.
+Primary information not found CoursePress or LADOK.
 
-The application source code is in vagrant/app
+Documentation: To be! See issues
