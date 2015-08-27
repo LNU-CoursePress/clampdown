@@ -38,6 +38,7 @@
     "request": "^2.55.0",
     "lodash": "~3.9.3",
     "compression": "^1.4.4",
-    "cors": "~2.7.1"
+    "cors": "~2.7.1",
+    "batch-request": "~0.1.1"
   }
 }

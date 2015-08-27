@@ -7,12 +7,20 @@
 var express = require("express");
 var router = express.Router();
 var keys = require("../../config/environment").secrets;
+
+// Load Batch Request
+var batch = require("batch-request")({
+    max: 15,
+    allowedHosts: ["192.168.50.50:3000", "coursehub.lnu.se"]
+});
+
 var key;
 
 // add middleware for handling API keys
 // this is checking all the requests and getting the
 // authorization header
-router.use(function (req, res, next) {
+
+router.use(function(req, res, next) {
 
     if (!req.headers.authorization) { // check the header
         return res.sendStatus(401);
@@ -42,6 +50,9 @@ router.get("/api/students", studentController.list);
 router.get("/api/students/:username", studentController.show);
 router.delete("/api/students/:username", studentController.delete);
 router.patch("/api/students/:username", studentController.update);
+
+// Use Batch Request as middleware on an endpoint you want to service batch requests
+router.post("/api/students/batch", batch.validate, batch);
 
 module.exports = router;
 
