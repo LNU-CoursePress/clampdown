@@ -14,13 +14,14 @@ exports.seed = function(callback) {
         else {
             Student.create(
                 {
-                    username: "thajostudent",
+                    username: "thajo",
                     firstname: "John",
                     lastname: "Häggerud",
                     studentType: "campus",
                     services: {
-                        github: "thajostudent"
-                    }
+                        github: "thajo"
+                    },
+                    program: "staff"
                 },
                 {
                     username: "tstjo",
@@ -30,6 +31,34 @@ exports.seed = function(callback) {
                     services: {
                         github: "leitet",
                         linkedin: "leitet"
+                    }
+                },
+                {
+                    username: "ttoda",
+                    firstname: "Daniel",
+                    lastname: "Toll",
+                    studentType: "campus",
+                    services: {
+                        github: "dtoll"
+                    }
+                },
+                {
+                    username: "tohto",
+                    firstname: "Tobias",
+                    lastname: "Ohlsson",
+                    studentType: "distance",
+                    services: {
+                        github: "hobbe",
+                        linkedin: "hobbe"
+                    }
+                },
+                {
+                    username: "mats",
+                    firstname: "Mats",
+                    lastname: "Loock",
+                    studentType: "distance",
+                    services: {
+                        github: "mtslck"
                     }
                 },
                 function(err) {

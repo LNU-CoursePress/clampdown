@@ -10,7 +10,7 @@ var keys = require("../../config/environment").secrets;
 
 // Load Batch Request
 var batch = require("batch-request")({
-    max: 15,
+    max: 30,
     allowedHosts: ["192.168.50.50:3000", "coursehub.lnu.se"]
 });
 
