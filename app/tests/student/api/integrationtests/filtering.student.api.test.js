@@ -29,7 +29,19 @@ describe("# Filtering - Students API", function() {
     describe("### Filtering /api/students", function() {
 
         it("should list just the students depending on class-querystring", function(done) {
-            done();
+            superagent
+                .get(URL +"/students")
+                .set("Accept", "application/json")
+                .set("Authorization", keys.APIReadKey)
+                .end(function(err, response) {
+                    should.not.exist(err);
+                    should.equal(response.status, 200);
+                    response.header.should.have.property("content-type").to.contain("application/json");
+                    var result = response.body;
+                    expect(result).to.have.length.above(0);
+                    expect(result[0].username).to.equal("xx222xx");
+                    done();
+                });
         });
 
     });
