@@ -20,7 +20,7 @@ if (process.env.NODE_ENV !== "test") {
     if (config.seedDB) {
         require("./config/seed").seed(function() {
             debug("Got stuff seeded");
-       });
+        });
     }
 }
 

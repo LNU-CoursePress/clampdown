@@ -60,7 +60,8 @@ function listStudents(callback, filterOptions) {
         }
 
         debug("Result", doc);
-        callback(null, asJSON(doc));
+        //callback(null, asJSON(doc));
+        callback(null, doc);
     });
 }
 
@@ -82,8 +83,8 @@ function getStudent(username, callback) {
             return callback(new Error(Messages.eng.show.usernameNotFound));
         }
 
-        var result =  asJSON(doc); // Hmmm...?
-        return callback(null, result); // stingify the result
+       // var result =  asJSON(doc); // Hmmm...?
+        return callback(null, doc); // stingify the result
     });
 }
 
@@ -163,6 +164,6 @@ function updateStudent(username, newObject, callback) {
  * @param {Object} doc
  * @return {Object} - An JSON-object
  */
-function asJSON(doc) {
-    return JSON.parse(JSON.stringify(doc));
-}
+//function asJSON(doc) {
+//    return JSON.parse(JSON.stringify(doc));
+//}
