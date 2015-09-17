@@ -11,6 +11,8 @@ exports.updateStudent = updateStudent;
 var whiteList = "-_id -__v"; // use to remove stuff we dont want in the response
 var Student = require("./student.schema.js").Student;
 var Messages = require("./student.Strings.js").Messages;
+var debug = require("debug")("filtering");
+
 
 /**
  * Creates a student and saves it in the db.
@@ -49,12 +51,15 @@ function createStudent(studentObject, callback) {
  * List all current users in the system
  * @param {function} callback - node standard callback function, returns the student object @see StudentSchema
  */
-function listStudents(callback) {
-    Student.find({}, whiteList).lean().exec(function(err, doc) {
+function listStudents(callback, filterOptions) {
+    filterOptions = filterOptions || {};
+    debug("Result filtering in model: ", filterOptions);
+    Student.find(filterOptions, whiteList).lean().exec(function(err, doc) {
         if (err) {
             return callback(err);
         }
 
+        debug("Result", doc);
         callback(null, asJSON(doc));
     });
 }

@@ -28,6 +28,7 @@ exports.seed = function(callback) {
                     firstname: "Johan",
                     lastname: "Leitet",
                     studentType: "distance",
+                    program: "staff",
                     services: {
                         github: "leitet",
                         linkedin: "leitet"
@@ -40,13 +41,15 @@ exports.seed = function(callback) {
                     studentType: "campus",
                     services: {
                         github: "dtoll"
-                    }
+                    },
+                    program: "WP2015"
                 },
                 {
                     username: "tohto",
                     firstname: "Tobias",
                     lastname: "Ohlsson",
                     studentType: "distance",
+                    program: "UDM2015",
                     services: {
                         github: "hobbe",
                         linkedin: "hobbe"
@@ -59,7 +62,8 @@ exports.seed = function(callback) {
                     studentType: "distance",
                     services: {
                         github: "mtslck"
-                    }
+                    },
+                    program: "WP2015"
                 },
                 function(err) {
                     if (err) {

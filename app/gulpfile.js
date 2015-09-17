@@ -18,7 +18,7 @@ var serverFiles = [
 ];
 
 gulp.task( 'server:start', function() {
-    server.listen( options, livereload.listen );
+    server.listen(options, livereload.listen );
 
 });
 
@@ -53,7 +53,7 @@ gulp.task('debug', function() {
 gulp.task('hint', function() {
     gulp.src('./api/**/*.js')
         .pipe(jshint('.jshintrc'))
-        .pipe(jshint.reporter('jshint-stylish'), { verbose: true });
+        .pipe(jshint.reporter('jshint-stylish'), { verbose: false });
 });
 
 gulp.task('test-build', function(cb) {

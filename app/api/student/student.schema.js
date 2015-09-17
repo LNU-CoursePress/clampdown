@@ -4,7 +4,11 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 // TODO: fix lowercase - fucked up!
-var studentTypes = "campus distance Campus Distance".split(" ");
+var studentTypes = "campus distance".split(" ");
+
+function toLower(v) {
+    return v.toLowerCase();
+}
 
 // define the userSchema
 var StudentSchema = new Schema({
@@ -13,7 +17,7 @@ var StudentSchema = new Schema({
     personNumber:   {type: String},
     city:           {type: String},
     username:       {type: String, required: true, index: true, unique: true},
-    studentType:    {type: String, enum: studentTypes, required: true},
+    studentType:    {type: String, enum: studentTypes, required: true, set: toLower},
     created:        {type: Date},
     program:        {type: String},
     services: {

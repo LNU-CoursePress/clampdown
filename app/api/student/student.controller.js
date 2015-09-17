@@ -7,6 +7,9 @@
 "use strict";
 var Student = require("./student.model");
 var Messages = require("./student.Strings.js").Messages;
+var url = require("url");
+var debug = require("debug")("filtering");
+
 
 exports.create = function(req, res) {
 
@@ -33,13 +36,17 @@ exports.show = function(req, res) {
 };
 
 exports.list = function(req, res) {
+    // Analyze the querystring
+    var queryObject = url.parse(req.url, true).query;
+    debug("queryObject: ", queryObject);
+
     Student.listStudents(function(err, students) {
         if (err) {
             respondTo(new Error("could not connect to DB"), res, null, 500);
         }
 
         respondTo(null, res, students, 200);
-    });
+    }, queryObject);
 };
 
 exports.delete = function(req, res) {

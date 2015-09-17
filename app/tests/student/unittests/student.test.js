@@ -28,7 +28,7 @@ describe('# Students: model - Unit tests', function () {
                username: 'mats',
                firstname: 'Mats',
                lastname: 'Loock',
-               studentType: 'Distance',
+               studentType: 'distance',
                program: 'WP2015',
                city: 'kalmar',
                services: {
@@ -63,7 +63,7 @@ describe('# Students: model - Unit tests', function () {
                 username: 'thajostudent',
                 firstname: 'John',
                 lastname: 'Häggerud',
-                studentType: 'Campus',
+                studentType: 'campus',
                 created: new Date(),
                 services: {
                     github: 'thajo'
@@ -88,7 +88,7 @@ describe('# Students: model - Unit tests', function () {
                 username: 'thajo',
                 firstname: 'John',
                 lastname: 'Häggerud',
-                studentType: 'Campus',
+                studentType: 'campus',
                 startYear: new Date().getFullYear(),
                 services: {
                     github: 'thajo'
@@ -176,7 +176,7 @@ describe('# Students: model - Unit tests', function () {
                     username: 'thajostudent',
                     firstname: 'John',
                     lastname: 'Häggerud',
-                    studentType: 'Campus',
+                    studentType: 'campus',
                     services: {
                         github: 'thajo'
                     }
@@ -227,7 +227,7 @@ describe('# Students: model - Unit tests', function () {
                 username: 'thajostudent',
                 firstname: 'John',
                 lastname: 'Loock',
-                studentType: 'Distance',
+                studentType: 'distance',
                 services: {
                     github: 'mtslk'
                 },
@@ -274,7 +274,7 @@ describe('# Students: model - Unit tests', function () {
                 username: 'thajostudent',
                 firstname: 'John',
                 lastname: 'Häggerud',
-                studentType: 'Campus',
+                studentType: 'campus',
                 services: {
                     github: 'thajo'
                 }
@@ -297,7 +297,7 @@ describe('# Students: model - Unit tests', function () {
                 username: 'thajoStudent',
                 firstname: 'John',
                 lastname: 'Häggerud',
-                studentType: 'Campus',
+                studentType: 'campus',
                 services: {
                     github: 'thajo'
                 }
@@ -328,7 +328,7 @@ describe('# Students: model - Unit tests', function () {
                 username: 'thajostudent',
                 firstname: 'Simone',
                 lastname: 'Häggerud',
-                studentType: 'Campus',
+                studentType: 'campus',
                 services: {
                     github: 'thajo'
                 }
@@ -357,7 +357,7 @@ describe('# Students: model - Unit tests', function () {
                 username: 'thajostudent',
                 firstname: 'John',
                 lastname: 'Haeggerud',
-                studentType: 'Campus',
+                studentType: 'campus',
                 services: {
                     github: 'mtslck',
                     twitter: 'thajo'

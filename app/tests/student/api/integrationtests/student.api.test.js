@@ -25,6 +25,11 @@ var Messages = require("../../../../api/student/student.Strings.js").Messages;
 describe("# Students API", function() {
 
 
+
+    after(function() {
+        server.close();
+    });
+
     describe("### /api/students", function() {
 
         it("should list all the students", function(done) {
@@ -45,7 +50,7 @@ describe("# Students API", function() {
                     username: "thajostudent",
                     firstname: "John",
                     lastname: "Häggerud",
-                    studentType: "Campus",
+                    studentType: "campus",
                     services: {
                         github: "thajo"
                     }
@@ -57,7 +62,7 @@ describe("# Students API", function() {
                     username: "tstjo",
                     firstname: "Johan",
                     lastname: "Leitet",
-                    studentType: "Distance",
+                    studentType: "campus",
                     services: {
                         github: "leitet",
                         linkedin: "leitet"
@@ -94,7 +99,7 @@ describe("# Students API", function() {
                 username: "mats",
                 firstname: "Mats",
                 lastname: "Loock",
-                studentType: "Campus",
+                studentType: "campus",
                 services: {
                     github: "mtslck"
                 }
@@ -116,7 +121,7 @@ describe("# Students API", function() {
                 username: "mats",
                 firstname: "Mats",
                 lastname: "Loock",
-                studentType: "Campus",
+                studentType: "campus",
                 services: {
                     github: "mtslck",
                     skype: "masse"
@@ -139,7 +144,7 @@ describe("# Students API", function() {
                 username: "thajostudent",
                 firstname: "Mats",
                 lastname: "Loock",
-                studentType: "Campus",
+                studentType: "campus",
                 services: {
                     github: "mtslck"
                 }
@@ -179,7 +184,7 @@ describe("# Students API", function() {
                 username: "thajostudent",
                 firstname: "Mats",
                 lastname: "Loock",
-                studentType: "Campus",
+                studentType: "campus",
                 services: {
                     github: "mtslck"
                 }
@@ -201,7 +206,7 @@ describe("# Students API", function() {
                 username: "xxxxxx",
                 firstname: "Mats",
                 lastname: "Loock",
-                studentType: "Campus",
+                studentType: "campus",
                 services: {
                     github: "mtslck"
                 }
@@ -255,7 +260,7 @@ describe("# Students API", function() {
                username: "thajostudent",
                firstname: "John",
                lastname: "Häggerud",
-               studentType: "Campus",
+               studentType: "campus",
                services: {
                    github: "thajo"
                }
@@ -320,7 +325,7 @@ describe("# Students API", function() {
                 username: "mats",
                 firstname: "Mats",
                 lastname: "Loock",
-                studentType: "Campus",
+                studentType: "campus",
                 services: {
                     github: "mtslck"
                 },
@@ -342,7 +347,7 @@ describe("# Students API", function() {
                 username: "thajostudent",
                 firstname: "Mats",
                 lastname: "Loock",
-                studentType: "Campus",
+                studentType: "campus",
                 services: {
                     github: "mtslck"
                 },

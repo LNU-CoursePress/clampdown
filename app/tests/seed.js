@@ -4,6 +4,7 @@
  */
 
 'use strict';
+var debug = require("debug")("test-seed");
 
 exports.seed = function(callback) {
     var Student = require('../api/student/student.schema.js').Student;
@@ -24,7 +25,7 @@ exports.seed = function(callback) {
                 username: 'tstjo',
                 firstname: 'Johan',
                 lastname: 'Leitet',
-                studentType: 'Distance',
+                studentType: 'campus',
                 startYear: new Date('2013').getFullYear(),
                 services: {
                     github: 'leitet',
@@ -35,14 +36,34 @@ exports.seed = function(callback) {
                 username: 'xx222xx',
                 firstname: 'Ellen',
                 lastname: 'Nu',
-                studentType: 'Distance',
-                class: 'WP2015',
+                studentType: 'distance',
+                program: 'WP2015',
                 services: {
                     github: 'rkrkrk'
                 }
             },
+            {
+                username: 'yy222yy',
+                firstname: 'Kalle',
+                lastname: 'Kula',
+                studentType: 'Campus',
+                program: 'WP2015',
+                services: {
+                    github: 'xxxxxx'
+                }
+            },
+            {
+                username: 'zz222zz',
+                firstname: 'Kalle',
+                lastname: 'Kula',
+                studentType: 'Campus',
+                program: 'UDM2015',
+                services: {
+                    github: 'xxxxxx'
+                }
+            },
             function() {
-                console.log(' TEST : finished populating students');
+                debug(' TEST : finished populating students');
                 callback();
             }
         );
