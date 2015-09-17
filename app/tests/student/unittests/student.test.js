@@ -152,7 +152,7 @@ describe('# Students: model - Unit tests', function () {
                 should.not.exist(err);
 
                 // verify that the returned user is what we expect
-                result.should.be.instanceof(Array).and.have.lengthOf(2);
+                result.should.be.instanceof(Array).and.have.length.above(2);
 
                 done();
             });

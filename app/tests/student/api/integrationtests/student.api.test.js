@@ -24,15 +24,6 @@ var Messages = require("../../../../api/student/student.Strings.js").Messages;
 
 describe("# Students API", function() {
 
-    var app;
-
-    before(function() {
-        app = server;
-    });
-
-    after(function() {
-        server.close();
-    });
 
     describe("### /api/students", function() {
 
@@ -47,7 +38,7 @@ describe("# Students API", function() {
                 should.equal(response.status, 200);
                 response.header.should.have.property("content-type").to.contain("application/json");
                 var result = response.body;
-                should.equal(result.length, 2);
+                expect(result).to.have.length.above(2);
 
                 // Is this stupid - the data should already been tested in unit tests
                 var obj1 = {

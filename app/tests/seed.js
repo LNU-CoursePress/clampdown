@@ -5,9 +5,6 @@
 
 'use strict';
 
-
-
-
 exports.seed = function(callback) {
     var Student = require('../api/student/student.schema.js').Student;
     Student.remove({}, function() {
@@ -32,6 +29,16 @@ exports.seed = function(callback) {
                 services: {
                     github: 'leitet',
                     linkedin: 'leitet'
+                }
+            },
+            {
+                username: 'xx222xx',
+                firstname: 'Ellen',
+                lastname: 'Nu',
+                studentType: 'Distance',
+                class: 'WP2015',
+                services: {
+                    github: 'rkrkrk'
                 }
             },
             function() {
