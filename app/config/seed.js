@@ -18,6 +18,7 @@ exports.seed = function(callback) {
                     firstname: "John",
                     lastname: "Häggerud",
                     studentType: "campus",
+                    city: "Kalmar",
                     services: {
                         github: "thajo"
                     },
@@ -29,6 +30,7 @@ exports.seed = function(callback) {
                     lastname: "Leitet",
                     studentType: "distance",
                     program: "staff",
+                    city: "kalmar",
                     services: {
                         github: "leitet",
                         linkedin: "leitet"
@@ -39,6 +41,7 @@ exports.seed = function(callback) {
                     firstname: "Daniel",
                     lastname: "Toll",
                     studentType: "campus",
+                    city: "KaLmaR",
                     services: {
                         github: "dtoll"
                     },

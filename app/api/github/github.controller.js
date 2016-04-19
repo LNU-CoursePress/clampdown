@@ -21,8 +21,16 @@ exports.check = function(req, res) {
 };
 
 function getUserInformation(username, callback) {
-    var url = "https://api.github.com/users/" +username;
-    console.log("calling %s", url);
+   /* var key = process.env.GITHUB_API_KEY || "";
+    var url;
+
+    if (key.length > 2) {
+        url = "https://thajo:" + key + "@api.github.com/users/" +username;
+    } else {
+        url = "https://api.github.com/users/" + username;
+    }*/
+
+    var url = "https://api.github.com/users/" + username;
 
     var options = {
         url: url,

@@ -9,7 +9,7 @@ var Student = require("./student.model");
 var Messages = require("./student.Strings.js").Messages;
 var url = require("url");
 var debug = require("debug")("filtering");
-
+var _ = require("lodash");
 
 exports.create = function(req, res) {
 
@@ -38,6 +38,7 @@ exports.show = function(req, res) {
 exports.list = function(req, res) {
     // Analyze the querystring
     var queryObject = url.parse(req.url, true).query;
+
     debug("queryObject: ", queryObject);
 
     Student.listStudents(function(err, students) {
@@ -64,9 +65,11 @@ exports.delete = function(req, res) {
 exports.update = function(req, res) {
     var username = req.params.username; // ake this from the URL a la RESTful
     var updateingStudent = req.body;
+
     Student.updateStudent(username, updateingStudent, function(err, student) {
         if (err) {
-            if (err.message === Messages.eng.update.usernameNotFound) {
+            console.log(err.message);
+            if (err.message === "Not found") {
                 res.statusCode = 404;
                 return respondTo(err, res);
             }

@@ -39,7 +39,8 @@ try it out in the browser of your choise.
 and open the files in the `app`-folder start editing your application. 
 If you make a change in the application the server application will restart.
 
-4. When you are done simply `ctrl+c` to abort the watch, `exit` to  exit the ssh-session and do a `vagrant halt` to stop the machine or `vagrant suspend` to only suspend it.
+4. When you are done simply `ctrl+c` to abort the watch, `exit` to  exit the ssh-session and do a `vagrant halt` 
+to stop the machine or `vagrant suspend` to only suspend it.
 
 ## Debugging
 1. On the server run `npm run gulp:debug`. The node-application will run in debug mode at port 5858

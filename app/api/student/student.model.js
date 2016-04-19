@@ -21,29 +21,15 @@ var debug = require("debug")("filtering");
  * @param {function} callback - node standard callback function
  */
 function createStudent(studentObject, callback) {
+    var currentStudent = new Student(studentObject);
 
-    var username = studentObject.username;
-
-    Student.find({username: username}, function(err, result) {
-        var currentStudent = new Student(studentObject);
+    currentStudent.save(function(err) {
         if (err) {
-            return callback(err);
+           return callback(err);
         }
 
-        if (result.length) {
-            return callback(new Error(Messages.eng.create.usernameTaken));
-        }
-        else {
-            currentStudent.save(function(err) {
-                if (err) {
-                    //console.log('Error in creating student:', err);
-                    return callback(err);
-                }
-
-                // we choose this approch for safty and correct format
-                getStudent(currentStudent.username, callback);
-            });
-        }
+        // we choose this approch for safty and correct format
+        getStudent(currentStudent.username, callback);
     });
 }
 
@@ -53,14 +39,11 @@ function createStudent(studentObject, callback) {
  */
 function listStudents(callback, filterOptions) {
     filterOptions = filterOptions || {};
-    debug("Result filtering in model: ", filterOptions);
     Student.find(filterOptions, whiteList).lean().exec(function(err, doc) {
         if (err) {
             return callback(err);
         }
 
-        debug("Result", doc);
-        //callback(null, asJSON(doc));
         callback(null, doc);
     });
 }
@@ -106,7 +89,6 @@ function deleteStudent(username, callback) {
 }
 
 /**
- * TODO: Refactor
  * Delete a specific user by username
  * @public
  * @param {String} username - The username of the student to update
@@ -115,55 +97,32 @@ function deleteStudent(username, callback) {
  */
 function updateStudent(username, newObject, callback) {
 
-    // Mongoose is stupid - First check if user exist so we can make own partial update and
-    // also have som kind of validation
-    getStudent(username, function(err, student) {
-        // couldn't find the student?
+    // ToDO: Stupid!
+
+    // Have to do this since i chose to normilize the stuff when saved
+    // Cant find a good way to do this in pre findAndUpdate hook
+    if (newObject.city) {
+        var c = newObject.city.toLowerCase();
+        newObject.city = c.charAt(0).toUpperCase() + c.slice(1);
+
+    }
+
+    Student.findOneAndUpdate({username: username}, {$set: newObject}, {
+        select: whiteList,
+        new: true,
+        runValidators: true,
+        context: "query"
+    }).lean().exec(function (err, result) {
         if (err) {
+
             return callback(err);
         }
 
-        // if the provided object is empty just send the db-object back
-        if (Object.getOwnPropertyNames(newObject).length === 0) {
-            return callback(null, student);
+        if (!result) {
+            // ToDo: String dependency
+            return callback(new Error("Not found"));
         }
 
-        // User should never change username so overwrite it with db-saved
-        newObject.username = student.username;
-
-        // go through the provided Object and update all properties
-        // overwrite the props - TODO: This makes the result order to look diffrent - Look into it
-        for (var prop in newObject) {
-            if (newObject.hasOwnProperty(prop)) {
-                student[prop] = newObject[prop];
-            }
-        }
-
-        // we do validate the new object (do this for enums and stuff)
-        var tmp = new Student(student);
-        tmp.validate(function(err) {
-            if (err && err.errors) {
-                return callback(err);
-            }
-
-            // check up the username, replace with newObject, just return the selected whitelist, return the newly(new:true) updated object
-            Student.findOneAndUpdate({username: student.username}, { $set: student}, {select: whiteList, new: true}).lean().exec(function(err, result) {
-                if (err) {
-                    return callback(err);
-                }
-
-                callback(null, result);
-            });
-        });
+        callback(null, result);
     });
 }
-
-/**
- * @private
- * Take a BSON-object (mongoose document) and make it to JSON
- * @param {Object} doc
- * @return {Object} - An JSON-object
- */
-//function asJSON(doc) {
-//    return JSON.parse(JSON.stringify(doc));
-//}
