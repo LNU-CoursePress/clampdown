@@ -158,6 +158,19 @@ describe('# Students: model - Unit tests', function () {
             });
         });
 
+        it("Should list students in Kalmar", function(done) {
+            var filter = {"city": "Kalmar"};
+            Student.listStudents(function (err, result) {
+                // Confirm that that an error does not exist
+                should.not.exist(err);
+
+                // verify that the returned user is what we expect
+                result.should.be.instanceof(Array).and.have.lengthOf(3);
+
+                done();
+            }, filter);
+        });
+
     });
 
 

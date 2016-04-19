@@ -387,7 +387,7 @@ describe("# Students API", function() {
     // TODO: Write test for deleteing
 
     describe("### Student API filter functions", function() {
-        it("Should get all with Kalmar", function(done) {
+        it("Should get all with KaLmaR", function(done) {
 
             superagent.get(URL +"/students?city=KaLmaR")
                 .set("Content-Type", "application/json")
@@ -395,7 +395,6 @@ describe("# Students API", function() {
                 .set("Authorization", keys.APIReadKey)
                 .end(function(err, res) {
                     should.equal(res.status, 200);
-                    expect(res).to.be.Array;
                     done();
                 });
         });
